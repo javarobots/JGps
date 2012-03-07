@@ -17,7 +17,7 @@ public class SentenceParser {
         mDataModel = model;
     }
 
-    public String processData(String data){
+    public String[] processData(String data){
         if (!mBeginOfSentence){
             mCompleteSentence = new StringBuilder();
             int indexOfStart = data.indexOf("$");
@@ -26,13 +26,17 @@ public class SentenceParser {
                 mBeginOfSentence = true;
             }
         }
-        
+
+        System.out.println(data);
+
         //Parse out the sentences on $
-        String[] sentences = data.split("$");
+        String[] sentences = data.split("[$]");
         for (String sentence : sentences){
-            
+            if (!sentence.isEmpty()){
+                parseSentence(sentence);
+            }
         }
-        return data;
+        return sentences;
     }
 
     public synchronized void parseSentence(String sentence) {

@@ -1,7 +1,6 @@
 package gps.nmea;
 
 import gps.data.GpsDataModel;
-import static org.junit.Assert.fail;
 import org.junit.*;
 
 /**
@@ -40,8 +39,11 @@ public class SentenceParserTest {
     @Test
     public void testProcessData() {
         System.out.println("processDataString");
-        String data = "*37,$GPGGA,1,2,3,4,5";
-        Assert.assertEquals("$GPGGA,1,2,3,4,5",mParser.processData(data));
+        String data = "*37,$GPGGA,013359,3503.5131,N,10632.7851,W,0,00,,,M,,M,,*4C$GPGGA,013359,3503.9999,N,10632.9999,W,0,00,,,M,,M,,*4C";
+        String[] processResult = mParser.processData(data);
+        Assert.assertTrue(processResult.length == 3);
+        Assert.assertEquals("GPGGA,013359,3503.5131,N,10632.7851,W,0,00,,,M,,M,,*4C",processResult[1]);
+        Assert.assertEquals("GPGGA,013359,3503.9999,N,10632.9999,W,0,00,,,M,,M,,*4C",processResult[2]);
     }
 
     /**

@@ -26,9 +26,6 @@ public class SentenceParser {
                 mBeginOfSentence = true;
             }
         }
-
-        System.out.println(data);
-
         //Parse out the sentences on $
         String[] sentences = data.split("[$]");
         for (String sentence : sentences){
@@ -39,25 +36,21 @@ public class SentenceParser {
         return sentences;
     }
 
-    public synchronized void parseSentence(String sentence) {
+    public void parseSentence(String sentence) {
         sentence = sentence.trim();
         String[] splitMessage = sentence.split(",");
-        switch (splitMessage[0]) {
-            case "$GPGSA":
-                parseGsa(sentence);
-                break;
-            case "$GPRMC":
-                parseRmc(sentence);
-                break;
-            case "$GPGGA":
-                parseGga(sentence);
-                break;
-            case "$GPGLL":
-                break;
-            case "$GPGSV":
-                break;
-            case "$GPVTG":
-                break;
+        if (splitMessage[0].equals("GPGSA")){
+            parseGsa(sentence);
+        } else if (splitMessage[0].equals("GPRMC")){
+            parseRmc(sentence);
+        } else if (splitMessage[0].equals("GPGGA")){
+            parseGga(sentence);
+        } else if (splitMessage[0].equals("GPGLL")){
+
+        } else if (splitMessage[0].equals("GPGSV")){
+
+        } else if (splitMessage[0].equals("GPVTG")){
+
         }
     }
 
@@ -102,6 +95,8 @@ public class SentenceParser {
             if (!numberOfSatellites.isEmpty()){
                 mDataModel.setmNumberOfSatelites(Integer.parseInt(numberOfSatellites));
             }
+
+            mDataModel.notifyObservers();
         }
     }
 
@@ -124,6 +119,8 @@ public class SentenceParser {
             if (!course.isEmpty()){
                 mDataModel.setTrueCourse(Double.parseDouble(course));
             }
+
+            mDataModel.notifyObservers();
         }
     }
 
@@ -160,6 +157,8 @@ public class SentenceParser {
             if (!fixMode.isEmpty()){
                 mDataModel.setFixMode(Integer.parseInt(fixMode));
             }
+
+            mDataModel.notifyObservers();
         }
     }
 

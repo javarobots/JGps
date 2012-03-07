@@ -26,6 +26,12 @@ public class SentenceParser {
                 mBeginOfSentence = true;
             }
         }
+        
+        //Parse out the sentences on $
+        String[] sentences = data.split("$");
+        for (String sentence : sentences){
+            
+        }
         return data;
     }
 

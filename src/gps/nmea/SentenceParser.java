@@ -11,13 +11,15 @@ public class SentenceParser {
 
     private GpsDataModel mDataModel;
     private boolean mBeginOfSentence = false;
+    private StringBuilder mCompleteSentence;
 
     public SentenceParser(GpsDataModel model){
         mDataModel = model;
     }
 
-    public String processDataString(String data){
+    public String processData(String data){
         if (!mBeginOfSentence){
+            mCompleteSentence = new StringBuilder();
             int indexOfStart = data.indexOf("$");
             if (indexOfStart != -1){
                 data = data.substring(indexOfStart);
@@ -61,25 +63,35 @@ public class SentenceParser {
 
             //Set Latitude
             String latitude = values[2];
-            mDataModel.setLatitude(Double.parseDouble(latitude));
-            mDataModel.setLatitudeHemisphere(values[3]);
+            if (!latitude.isEmpty()){
+                mDataModel.setLatitude(Double.parseDouble(latitude));
+                mDataModel.setLatitudeHemisphere(values[3]);
+            }
 
             //Set longitude
             String longitude = values[4];
-            mDataModel.setLongitude(Double.parseDouble(longitude));
-            mDataModel.setLongitudeHemispere(values[5]);
+            if (!longitude.isEmpty()){
+                mDataModel.setLongitude(Double.parseDouble(longitude));
+                mDataModel.setLongitudeHemispere(values[5]);
+            }
 
             //Set fix quality
             String fixQuality = values[6];
-            mDataModel.setFixQuality(Integer.parseInt(fixQuality));
+            if (!fixQuality.isEmpty()){
+                mDataModel.setFixQuality(Integer.parseInt(fixQuality));
+            }
 
             //Set altitude
             String altitude = values[9];
-            mDataModel.setAltitude(Double.parseDouble(altitude));
+            if (!altitude.isEmpty()){
+                mDataModel.setAltitude(Double.parseDouble(altitude));
+            }
 
             //Set number of tracked satellites
             String numberOfSatellites = values[7];
-            mDataModel.setmNumberOfSatelites(Integer.parseInt(numberOfSatellites));
+            if (!numberOfSatellites.isEmpty()){
+                mDataModel.setmNumberOfSatelites(Integer.parseInt(numberOfSatellites));
+            }
         }
     }
 
@@ -93,11 +105,15 @@ public class SentenceParser {
 
             //Set ground speed
             String groundSpeed = values[7];
-            mDataModel.setSpeedOverGround(Double.parseDouble(groundSpeed));
+            if (!groundSpeed.isEmpty()){
+                mDataModel.setSpeedOverGround(Double.parseDouble(groundSpeed));
+            }
 
             //Set course over ground
             String course = values[8];
-            mDataModel.setTrueCourse(Double.parseDouble(course));
+            if (!course.isEmpty()){
+                mDataModel.setTrueCourse(Double.parseDouble(course));
+            }
         }
     }
 
@@ -111,21 +127,29 @@ public class SentenceParser {
 
             //Set PDOP
             String pdop = values[15];
-            mDataModel.setPdop(Double.parseDouble(pdop));
+            if (!pdop.isEmpty()){
+                mDataModel.setPdop(Double.parseDouble(pdop));
+            }
 
             //Set HDOP
             String hdop = values[16];
-            mDataModel.setHdop(Double.parseDouble(hdop));
+            if (!hdop.isEmpty()){
+                mDataModel.setHdop(Double.parseDouble(hdop));
+            }
 
             //Set VDOP
             String vdop = values[17];
             String[] vdopSplit = vdop.split("\\*");
             vdop = vdopSplit[0];
-            mDataModel.setVdop(Double.parseDouble(vdop));
+            if (!vdop.isEmpty()){
+                mDataModel.setVdop(Double.parseDouble(vdop));
+            }
 
             //Set fix mode
             String fixMode = values[2];
-            mDataModel.setFixMode(Integer.parseInt(fixMode));
+            if (!fixMode.isEmpty()){
+                mDataModel.setFixMode(Integer.parseInt(fixMode));
+            }
         }
     }
 

@@ -10,6 +10,7 @@ import org.junit.*;
  */
 public class SentenceParserTest {
 
+    private GpsDataModel mDataModel;
     private SentenceParser mParser;
 
     public SentenceParserTest() {
@@ -25,7 +26,8 @@ public class SentenceParserTest {
 
     @Before
     public void setUp() {
-        mParser = new SentenceParser(new GpsDataModel());
+        mDataModel = new GpsDataModel();
+        mParser = new SentenceParser(mDataModel);
     }
 
     @After
@@ -36,11 +38,10 @@ public class SentenceParserTest {
      * Test of processDataString method, of class SentenceParser.
      */
     @Test
-    public void testProcessDataString() {
+    public void testProcessData() {
         System.out.println("processDataString");
         String data = "*37,$GPGGA,1,2,3,4,5";
-
-        Assert.assertEquals("$GPGGA,1,2,3,4,5",mParser.processDataString(data));
+        Assert.assertEquals("$GPGGA,1,2,3,4,5",mParser.processData(data));
     }
 
     /**
@@ -49,10 +50,11 @@ public class SentenceParserTest {
     @Test
     public void testParseSentence() {
         System.out.println("parserSentence");
-        String sentence = "";
-        SentenceParser instance = null;
-        instance.parseSentence(sentence);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String sentence = "$GPGGA,013359,3503.5131,N,10632.7851,W,0,00,,,M,,M,,*4C";
+        mParser.parseSentence(sentence);
+        Assert.assertEquals((Double) mDataModel.getLatitude(), new Double(3503.5131));
+        Assert.assertEquals((Double) mDataModel.getLongitude(), new Double(10632.7851));
+        Assert.assertEquals(mDataModel.getLatitudeHemisphere(), "N");
+        Assert.assertEquals(mDataModel.getLongitudeHemispere(), "W");
     }
 }

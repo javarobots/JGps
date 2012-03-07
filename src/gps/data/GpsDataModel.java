@@ -10,23 +10,23 @@ import java.util.Observable;
 public class GpsDataModel extends Observable {
 
     //From $GPGGA sentence
-    private double mLatitude;
-    private double mLongitude;
-    private String mLatitudeHemisphere; //N or S
-    private String mLongitudeHemispere; //E or W
-    private int mFixQuality; //0=Invalid 1=GPS 2=DGPS
-    private double mAltitude; //Altitude in meters
-    private int mNumberOfSatelites; //Number of satellites being tracked
+    private double mLatitude = 00.000;
+    private double mLongitude = 000.000;
+    private String mLatitudeHemisphere = "N"; //N or S
+    private String mLongitudeHemispere = "W"; //E or W
+    private int mFixQuality = 0; //0=Invalid 1=GPS 2=DGPS
+    private double mAltitude = 0; //Altitude in meters
+    private int mNumberOfSatelites = 0; //Number of satellites being tracked
 
     //From $GPRMC sentence
-    private double mSpeedOverGround; //Speed in knots
-    private double mTrueCourse; //Heading over ground
+    private double mSpeedOverGround = 0; //Speed in knots
+    private double mTrueCourse = 0; //Heading over ground
 
     //From $GPGSA sentence
-    private int mFixMode; //1=No Fix 2=2D 3=3D
-    private double mPdop;
-    private double mHdop;
-    private double mVdop;
+    private int mFixMode = 1; //1=No Fix 2=2D 3=3D
+    private double mPdop = 99;
+    private double mHdop = 99;
+    private double mVdop = 99;
 
     public double getAltitude() {
         return mAltitude;

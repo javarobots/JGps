@@ -50,7 +50,7 @@ public class SentenceParser {
         } else if (splitMessage[0].equals("GPGSV")){
 
         } else if (splitMessage[0].equals("GPVTG")){
-
+            parseVtg(sentence);
         }
     }
 
@@ -106,13 +106,7 @@ public class SentenceParser {
      */
     private void parseRmc(String message){
         String[] values = message.split(",");
-        if (values.length == 13){
-
-            //Set ground speed
-            String groundSpeed = values[7];
-            if (!groundSpeed.isEmpty()){
-                mDataModel.setSpeedOverGround(Double.parseDouble(groundSpeed));
-            }
+        if (values.length == 13){            
 
             //Set course over ground
             String course = values[8];
@@ -159,6 +153,18 @@ public class SentenceParser {
             }
 
             mDataModel.notifyObservers();
+        }
+    }
+
+    private void parseVtg(String message) {
+        String[] values = message.split(",");
+        if (values.length == 9){
+            
+            //Set ground speed
+            String groundSpeed = values[7];
+            if (!groundSpeed.isEmpty()){
+                mDataModel.setSpeedOverGround(Double.parseDouble(groundSpeed));
+            }
         }
     }
 

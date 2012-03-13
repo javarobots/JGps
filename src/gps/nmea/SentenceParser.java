@@ -113,8 +113,6 @@ public class SentenceParser {
             if (!course.isEmpty()){
                 mDataModel.setTrueCourse(Double.parseDouble(course));
             }
-
-            mDataModel.notifyObservers();
         }
     }
 
@@ -151,8 +149,6 @@ public class SentenceParser {
             if (!fixMode.isEmpty()){
                 mDataModel.setFixMode(Integer.parseInt(fixMode));
             }
-
-            mDataModel.notifyObservers();
         }
     }
 

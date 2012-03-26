@@ -54,9 +54,9 @@ public class SentenceParserTest {
         System.out.println("parserSentence");
         String sentence = "$GPGGA,013359,3503.5131,N,10632.7851,W,0,00,,,M,,M,,*4C";
         mParser.parseSentence(sentence);
-        Assert.assertEquals((Double) mDataModel.getLatitude(), new Double(3503.5131));
-        Assert.assertEquals((Double) mDataModel.getLongitude(), new Double(10632.7851));
-        Assert.assertEquals(mDataModel.getLatitudeHemisphere(), "N");
-        Assert.assertEquals(mDataModel.getLongitudeHemispere(), "W");
+        Assert.assertEquals((Double) mDataModel.getGgaLatitude(), new Double(3503.5131));
+        Assert.assertEquals((Double) mDataModel.getGgaLongitude(), new Double(10632.7851));
+        Assert.assertEquals(mDataModel.getGgaLatitudeHemisphere(), "N");
+        Assert.assertEquals(mDataModel.getGgaLongitudeHemispere(), "W");
     }
 }

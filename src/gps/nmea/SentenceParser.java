@@ -67,33 +67,33 @@ public class SentenceParser {
             //Set Latitude
             String latitude = values[2];
             if (!latitude.isEmpty()){
-                mDataModel.setLatitude(Double.parseDouble(latitude));
-                mDataModel.setLatitudeHemisphere(values[3]);
+                mDataModel.setGgaLatitude(Double.parseDouble(latitude));
+                mDataModel.setGgaLatitudeHemisphere(values[3]);
             }
 
             //Set longitude
             String longitude = values[4];
             if (!longitude.isEmpty()){
-                mDataModel.setLongitude(Double.parseDouble(longitude));
-                mDataModel.setLongitudeHemispere(values[5]);
+                mDataModel.setGgaLongitude(Double.parseDouble(longitude));
+                mDataModel.setGgaLongitudeHemispere(values[5]);
             }
 
             //Set fix quality
             String fixQuality = values[6];
             if (!fixQuality.isEmpty()){
-                mDataModel.setFixQuality(Integer.parseInt(fixQuality));
+                mDataModel.setGgaFixQuality(Integer.parseInt(fixQuality));
             }
 
             //Set altitude
             String altitude = values[9];
             if (!altitude.isEmpty()){
-                mDataModel.setAltitude(Double.parseDouble(altitude));
+                mDataModel.setGgaAltitude(Double.parseDouble(altitude));
             }
 
             //Set number of tracked satellites
             String numberOfSatellites = values[7];
             if (!numberOfSatellites.isEmpty()){
-                mDataModel.setmNumberOfSatelites(Integer.parseInt(numberOfSatellites));
+                mDataModel.setGsaNumberOfSatelites(Integer.parseInt(numberOfSatellites));
             }
 
             mDataModel.notifyObservers();
@@ -111,7 +111,7 @@ public class SentenceParser {
             //Set course over ground
             String course = values[8];
             if (!course.isEmpty()){
-                mDataModel.setTrueCourse(Double.parseDouble(course));
+                mDataModel.setRmcTrueCourse(Double.parseDouble(course));
             }
         }
     }
@@ -127,13 +127,13 @@ public class SentenceParser {
             //Set PDOP
             String pdop = values[15];
             if (!pdop.isEmpty()){
-                mDataModel.setPdop(Double.parseDouble(pdop));
+                mDataModel.setGsaPdop(Double.parseDouble(pdop));
             }
 
             //Set HDOP
             String hdop = values[16];
             if (!hdop.isEmpty()){
-                mDataModel.setHdop(Double.parseDouble(hdop));
+                mDataModel.setGsaHdop(Double.parseDouble(hdop));
             }
 
             //Set VDOP
@@ -141,13 +141,13 @@ public class SentenceParser {
             String[] vdopSplit = vdop.split("\\*");
             vdop = vdopSplit[0];
             if (!vdop.isEmpty()){
-                mDataModel.setVdop(Double.parseDouble(vdop));
+                mDataModel.setGsaVdop(Double.parseDouble(vdop));
             }
 
             //Set fix mode
             String fixMode = values[2];
             if (!fixMode.isEmpty()){
-                mDataModel.setFixMode(Integer.parseInt(fixMode));
+                mDataModel.setGsaFixMode(Integer.parseInt(fixMode));
             }
         }
     }
@@ -159,7 +159,7 @@ public class SentenceParser {
             //Set ground speed
             String groundSpeed = values[7];
             if (!groundSpeed.isEmpty()){
-                mDataModel.setSpeedOverGround(Double.parseDouble(groundSpeed));
+                mDataModel.setRmcSpeedOverGround(Double.parseDouble(groundSpeed));
             }
         }
     }

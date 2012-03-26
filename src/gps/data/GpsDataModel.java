@@ -10,138 +10,138 @@ import java.util.Observable;
 public class GpsDataModel extends Observable {
 
     //From $GPGGA sentence
-    private double mLatitude = 00.000;
-    private double mLongitude = 000.000;
-    private String mLatitudeHemisphere = "N"; //N or S
-    private String mLongitudeHemispere = "W"; //E or W
-    private int mFixQuality = 0; //0=Invalid 1=GPS 2=DGPS
-    private double mAltitude = 0; //Altitude in meters
-    private int mNumberOfSatelites = 0; //Number of satellites being tracked
+    private double mGGALatitude = 00.000;
+    private double mGGALongitude = 000.000;
+    private String mGGALatitudeHemisphere = "N"; //N or S
+    private String mGGALongitudeHemispere = "W"; //E or W
+    private int mGGAFixQuality = 0; //0=Invalid 1=GPS 2=DGPS
+    private double mGGAAltitude = 0; //Altitude in meters
+    private int mGGANumberOfSatelites = 0; //Number of satellites being tracked
 
     //From $GPRMC sentence
-    private double mSpeedOverGround = 0; //Speed in knots
-    private double mTrueCourse = 0; //Heading over ground
+    private double mRMCSpeedOverGround = 0; //Speed in knots
+    private double mRMCTrueCourse = 0; //Heading over ground
 
     //From $GPGSA sentence
-    private int mFixMode = 1; //1=No Fix 2=2D 3=3D
-    private double mPdop = 99;
-    private double mHdop = 99;
-    private double mVdop = 99;
+    private int mGSAFixMode = 1; //1=No Fix 2=2D 3=3D
+    private double mGSAPdop = 99;
+    private double mGSAHdop = 99;
+    private double mGSAVdop = 99;
 
-    public double getAltitude() {
-        return mAltitude;
+    public double getGgaAltitude() {
+        return mGGAAltitude;
     }
 
-    public void setAltitude(double altitude) {
-        this.mAltitude = altitude;
+    public void setGgaAltitude(double altitude) {
+        this.mGGAAltitude = altitude;
         setChanged();
     }
 
-    public int getFixMode() {
-        return mFixMode;
+    public int getGsaFixMode() {
+        return mGSAFixMode;
     }
 
-    public void setFixMode(int fixMode) {
-        this.mFixMode = fixMode;
+    public void setGsaFixMode(int fixMode) {
+        this.mGSAFixMode = fixMode;
         setChanged();
     }
 
-    public int getFixQuality() {
-        return mFixQuality;
+    public int getGgaFixQuality() {
+        return mGGAFixQuality;
     }
 
-    public void setFixQuality(int fixQuality) {
-        this.mFixQuality = fixQuality;
+    public void setGgaFixQuality(int fixQuality) {
+        this.mGGAFixQuality = fixQuality;
         setChanged();
     }
 
-    public double getHdop() {
-        return mHdop;
+    public double getGsaHdop() {
+        return mGSAHdop;
     }
 
-    public void setHdop(double hdop) {
-        this.mHdop = hdop;
+    public void setGsaHdop(double hdop) {
+        this.mGSAHdop = hdop;
         setChanged();
     }
 
-    public double getLatitude() {
-        return mLatitude;
+    public double getGgaLatitude() {
+        return mGGALatitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.mLatitude = latitude;
+    public void setGgaLatitude(double latitude) {
+        this.mGGALatitude = latitude;
         setChanged();
     }
 
-    public String getLatitudeHemisphere() {
-        return mLatitudeHemisphere;
+    public String getGgaLatitudeHemisphere() {
+        return mGGALatitudeHemisphere;
     }
 
-    public void setLatitudeHemisphere(String latitudeHemisphere) {
-        this.mLatitudeHemisphere = latitudeHemisphere;
+    public void setGgaLatitudeHemisphere(String latitudeHemisphere) {
+        this.mGGALatitudeHemisphere = latitudeHemisphere;
         setChanged();
     }
 
-    public double getLongitude() {
-        return mLongitude;
+    public double getGgaLongitude() {
+        return mGGALongitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.mLongitude = longitude;
+    public void setGgaLongitude(double longitude) {
+        this.mGGALongitude = longitude;
         setChanged();
     }
 
-    public String getLongitudeHemispere() {
-        return mLongitudeHemispere;
+    public String getGgaLongitudeHemispere() {
+        return mGGALongitudeHemispere;
     }
 
-    public void setLongitudeHemispere(String longitudeHemispere) {
-        this.mLongitudeHemispere = longitudeHemispere;
+    public void setGgaLongitudeHemispere(String longitudeHemispere) {
+        this.mGGALongitudeHemispere = longitudeHemispere;
         setChanged();
     }
 
-    public double getPdop() {
-        return mPdop;
+    public double getGsaPdop() {
+        return mGSAPdop;
     }
 
-    public void setPdop(double pdop) {
-        this.mPdop = pdop;
+    public void setGsaPdop(double pdop) {
+        this.mGSAPdop = pdop;
         setChanged();
     }
 
-    public double getSpeedOverGround() {
-        return mSpeedOverGround;
+    public double getRmcSpeedOverGround() {
+        return mRMCSpeedOverGround;
     }
 
-    public void setSpeedOverGround(double speedOverGround) {
-        this.mSpeedOverGround = speedOverGround;
+    public void setRmcSpeedOverGround(double speedOverGround) {
+        this.mRMCSpeedOverGround = speedOverGround;
         setChanged();
     }
 
-    public double getTrueCourse() {
-        return mTrueCourse;
+    public double getRmcTrueCourse() {
+        return mRMCTrueCourse;
     }
 
-    public void setTrueCourse(double trueCourse) {
-        this.mTrueCourse = trueCourse;
+    public void setRmcTrueCourse(double trueCourse) {
+        this.mRMCTrueCourse = trueCourse;
         setChanged();
     }
 
-    public double getVdop() {
-        return mVdop;
+    public double getGsaVdop() {
+        return mGSAVdop;
     }
 
-    public void setVdop(double vdop) {
-        this.mVdop = vdop;
+    public void setGsaVdop(double vdop) {
+        this.mGSAVdop = vdop;
         setChanged();
     }
 
-    public int getmNumberOfSatelites() {
-        return mNumberOfSatelites;
+    public int getGsaNumberOfSatelites() {
+        return mGGANumberOfSatelites;
     }
 
-    public void setmNumberOfSatelites(int numberOfSatelites) {
-        this.mNumberOfSatelites = numberOfSatelites;
+    public void setGsaNumberOfSatelites(int numberOfSatelites) {
+        this.mGGANumberOfSatelites = numberOfSatelites;
         setChanged();
     }
 

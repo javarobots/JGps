@@ -4,6 +4,7 @@ package gps.nmea;
 import gps.data.Coordinate;
 import gps.data.GpsDataModel;
 import gps.data.Hemisphere;
+import gps.data.UTCTime;
 
 /**
  *
@@ -65,6 +66,11 @@ public class SentenceParser {
 
         //Ensure message is proper length
         if (values.length == 15){
+            
+            //Set GGA UTC time
+            int[] timeArray = parseUtcTime(values[1]);
+            mDataModel.setGGATime(new UTCTime(timeArray[0], timeArray[1], timeArray[2]));            
+            
 
             //Set GGA Coordinate
             String latitude = values[2];
@@ -95,17 +101,28 @@ public class SentenceParser {
             if (!fixQuality.isEmpty()){
                 mDataModel.setGgaFixQuality(Integer.parseInt(fixQuality));
             }
-
+            
+            //Set number of stellites in use
+            String numberOfSatelites = values[7];
+            if (!numberOfSatelites.isEmpty()){
+                mDataModel.setGGANumberOfSatelites(Integer.parseInt(numberOfSatelites));
+            }
+            
+            //Set HDOP
+            String hdop = values[8];
+            if (!hdop.isEmpty()){
+                mDataModel.setGGAHdop(Double.parseDouble(hdop));
+            }
             //Set altitude
             String altitude = values[9];
             if (!altitude.isEmpty()){
-                mDataModel.setGgaAltitude(Double.parseDouble(altitude));
+                mDataModel.setGGAHeightAboveSeaLevel(Double.parseDouble(altitude));
             }
-
-            //Set number of tracked satellites
-            String numberOfSatellites = values[7];
-            if (!numberOfSatellites.isEmpty()){
-                mDataModel.setGsaNumberOfSatelites(Integer.parseInt(numberOfSatellites));
+            
+            //Set Geoidal height
+            String geodialHeight = values[10];
+            if (!geodialHeight.isEmpty()){
+                mDataModel.setGGAGeoidalHeight(Double.parseDouble(geodialHeight));
             }
 
             mDataModel.notifyObservers();
@@ -174,6 +191,21 @@ public class SentenceParser {
                 mDataModel.setRmcSpeedOverGround(Double.parseDouble(groundSpeed));
             }
         }
+    }
+    
+    //!jdp -- Need to add error correction
+    private int[] parseUtcTime(String utcTime){
+        int[] returnArray = new int[3];
+        
+        //Parse time from end of utcTime String
+        String utcSecond = utcTime.substring(utcTime.length() - 2);
+        String utcMinutes = utcTime.substring(utcTime.length() - 4, utcTime.length() - 2);
+        String utcHour = utcTime.substring(0, utcTime.length() - 4);
+        returnArray[0] = Integer.parseInt(utcHour);
+        returnArray[1] = Integer.parseInt(utcMinutes);
+        returnArray[2] = Integer.parseInt(utcSecond);
+        
+        return returnArray;
     }
 
 }

@@ -93,6 +93,15 @@ public class GpsDataModel extends Observable {
         setChanged();
     }
     
+    public int getGGANumberOfSatelites() {
+        return mGGANumberOfSatelites;
+    }
+
+    public void setGGANumberOfSatelites(int numberOfSatelites) {
+        this.mGGANumberOfSatelites = numberOfSatelites;
+        setChanged();
+    }
+    
     
     
     //---------------------- GSA Getter Setter -----------------------------    
@@ -130,15 +139,6 @@ public class GpsDataModel extends Observable {
 
     public void setGsaVdop(double vdop) {
         this.mGSAVdop = vdop;
-        setChanged();
-    }
-
-    public int getGsaNumberOfSatelites() {
-        return mGGANumberOfSatelites;
-    }
-
-    public void setGsaNumberOfSatelites(int numberOfSatelites) {
-        this.mGGANumberOfSatelites = numberOfSatelites;
         setChanged();
     }
 

@@ -13,6 +13,12 @@ public class UTCDate {
     private int mDay;
     private int mMonth;
     private int mYear;
+    
+    public UTCDate(int day, int month, int year){
+        mMonth = month;
+        mDay = day;
+        mYear = year;
+    }
 
     public int getDay() {
         return mDay;

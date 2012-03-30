@@ -13,11 +13,10 @@ public class GpsDataModel extends Observable {
     private UTCTime mGGATime;
     private Coordinate mGGACoordinate;
     private int mGGAFixQuality = 0; //0=Invalid 1=GPS 2=DGPS
-    private double mGGAAltitude = 0; //Altitude in meters
     private int mGGANumberOfSatelites = 0; //Number of satellites being tracked
-    private double mGGAHdop = 99;
-    private double mGGAHeightAboveSeaLevel = 0;
-    private double mGGAGeoidalHeight = 0;
+    private double mGGAHdop = 99; //Horizontal dilution of precision
+    private double mGGAHeightAboveSeaLevel = 0; //Altitude in meters
+    private double mGGAGeoidalHeight = 0; //Geoidal height in meters
 
     //From $GPRMC sentence
     private UTCTime mRMCTime;
@@ -40,15 +39,15 @@ public class GpsDataModel extends Observable {
     
     //---------------------- GGA Getter Setters ----------------------------
 
-    public double getGgaAltitude() {
-        return mGGAAltitude;
+    public double getGGAHeightAboveSeaLevel() {
+        return mGGAHeightAboveSeaLevel;
     }
 
-    public void setGgaAltitude(double altitude) {
-        this.mGGAAltitude = altitude;
+    public void setGGAHeightAboveSeaLevel(double heightAboveSeaLevel) {
+        this.mGGAHeightAboveSeaLevel = heightAboveSeaLevel;
         setChanged();
     }
-
+    
     public int getGgaFixQuality() {
         return mGGAFixQuality;
     }
@@ -57,6 +56,44 @@ public class GpsDataModel extends Observable {
         this.mGGAFixQuality = fixQuality;
         setChanged();
     }
+
+    public Coordinate getGGACoordinate() {
+        return mGGACoordinate;
+    }
+
+    public void setGGACoordinate(Coordinate coordinate) {
+        this.mGGACoordinate = coordinate;
+        setChanged();
+    }
+
+    public double getGGAGeoidalHeight() {
+        return mGGAGeoidalHeight;
+    }
+
+    public void setGGAGeoidalHeight(double geoidalHeight) {
+        this.mGGAGeoidalHeight = geoidalHeight;
+        setChanged();
+    }
+
+    public double getGGAHdop() {
+        return mGGAHdop;
+    }
+
+    public void setGGAHdop(double hdop) {
+        this.mGGAHdop = hdop;
+        setChanged();
+    }
+
+    public UTCTime getGGATime() {
+        return mGGATime;
+    }
+
+    public void setGGATime(UTCTime time) {
+        this.mGGATime = time;
+        setChanged();
+    }
+    
+    
     
     //---------------------- GSA Getter Setter -----------------------------    
 
@@ -104,6 +141,26 @@ public class GpsDataModel extends Observable {
         this.mGGANumberOfSatelites = numberOfSatelites;
         setChanged();
     }
+
+    public String getmGSAMode() {
+        return mGSAMode;
+    }
+
+    public void setmGSAMode(String mode) {
+        this.mGSAMode = mode;
+        setChanged();
+    }
+
+    public int[] getmGSAPRNNumber() {
+        return mGSAPRNNumber;
+    }
+
+    public void setmGSAPRNNumber(int[] prnNumber) {
+        this.mGSAPRNNumber = prnNumber;
+        setChanged();
+    }
+    
+    
     
     //---------------------- RMC Getter Setter -----------------------------
 
@@ -124,4 +181,69 @@ public class GpsDataModel extends Observable {
         this.mRMCCourseOverGround = trueCourse;
         setChanged();
     }
+
+    public Coordinate getmRMCCoordinate() {
+        return mRMCCoordinate;
+    }
+
+    public void setmRMCCoordinate(Coordinate coordinate) {
+        this.mRMCCoordinate = coordinate;
+        setChanged();
+    }
+
+    public UTCDate getmRMCDate() {
+        return mRMCDate;
+    }
+
+    public void setmRMCDate(UTCDate date) {
+        this.mRMCDate = date;
+        setChanged();
+    }
+
+    public double getmRMCMagneticVariation() {
+        return mRMCMagneticVariation;
+    }
+
+    public void setmRMCMagneticVariation(double magneticVariation) {
+        this.mRMCMagneticVariation = magneticVariation;
+        setChanged();
+    }
+
+    public String getmRMCMagneticVariationDirection() {
+        return mRMCMagneticVariationDirection;
+    }
+
+    public void setmRMCMagneticVariationDirection(String magneticVariationDirection) {
+        this.mRMCMagneticVariationDirection = magneticVariationDirection;
+        setChanged();
+    }
+
+    public String getmRMCModeIndicator() {
+        return mRMCModeIndicator;
+    }
+
+    public void setmRMCModeIndicator(String modeIndicator) {
+        this.mRMCModeIndicator = modeIndicator;
+        setChanged();
+    }
+
+    public String getmRMCStatus() {
+        return mRMCStatus;
+    }
+
+    public void setmRMCStatus(String status) {
+        this.mRMCStatus = status;
+        setChanged();
+    }
+
+    public UTCTime getmRMCTime() {
+        return mRMCTime;
+    }
+
+    public void setmRMCTime(UTCTime time) {
+        this.mRMCTime = time;
+        setChanged();
+    }
+    
+    
 }

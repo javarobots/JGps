@@ -72,29 +72,9 @@ public class SentenceParser {
             mDataModel.setGGATime(new UTCTime(timeArray[0], timeArray[1], timeArray[2]));            
             
 
-            //Set GGA Coordinate
-            String latitude = values[2];
-            Hemisphere latHemisphere;
-            String longitude = values[4];
-            Hemisphere lonHemisphere;
-            
-            if (values[3].equals("N")){
-                latHemisphere = Hemisphere.NORTH;
-            } else {
-                latHemisphere = Hemisphere.SOUTH;
-            }
-            
-            if (values[5].equals("E")){
-                lonHemisphere = Hemisphere.EAST;
-            } else {
-                lonHemisphere = Hemisphere.WEST;
-            }
-            
-            Coordinate ggaCoordinate = new Coordinate(
-                    Double.parseDouble(latitude),
-                    latHemisphere,
-                    Double.parseDouble(longitude),
-                    lonHemisphere);
+            //Set GGA Coordinate            
+            Coordinate ggaCoordinate = coordinateParser(values[2], values[3], values[4], values[5]);
+            mDataModel.setGGACoordinate(ggaCoordinate);
 
             //Set fix quality
             String fixQuality = values[6];
@@ -206,6 +186,36 @@ public class SentenceParser {
         returnArray[2] = Integer.parseInt(utcSecond);
         
         return returnArray;
+    }
+    
+    //!jdp -- Need to add error correction
+    private Coordinate coordinateParser(
+            String latitude,
+            String latitudeHemisphere,
+            String longitude,
+            String longitudeHemisphere){
+            
+            Hemisphere latHemisphere;
+            Hemisphere lonHemisphere;
+            if (latitudeHemisphere.equals("N")){
+                latHemisphere = Hemisphere.NORTH;
+            } else {
+                latHemisphere = Hemisphere.SOUTH;
+            }
+            
+            if (longitudeHemisphere.equals("E")){
+                lonHemisphere = Hemisphere.EAST;
+            } else {
+                lonHemisphere = Hemisphere.WEST;
+            }
+            
+            Coordinate coordinate = new Coordinate(
+                    Double.parseDouble(latitude),
+                    latHemisphere,
+                    Double.parseDouble(longitude),
+                    lonHemisphere);
+
+        return coordinate;
     }
 
 }

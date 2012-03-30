@@ -182,65 +182,65 @@ public class GpsDataModel extends Observable {
         setChanged();
     }
 
-    public Coordinate getmRMCCoordinate() {
+    public Coordinate getRMCCoordinate() {
         return mRMCCoordinate;
     }
 
-    public void setmRMCCoordinate(Coordinate coordinate) {
+    public void setRMCCoordinate(Coordinate coordinate) {
         this.mRMCCoordinate = coordinate;
         setChanged();
     }
 
-    public UTCDate getmRMCDate() {
+    public UTCDate getRMCDate() {
         return mRMCDate;
     }
 
-    public void setmRMCDate(UTCDate date) {
+    public void setRMCDate(UTCDate date) {
         this.mRMCDate = date;
         setChanged();
     }
 
-    public double getmRMCMagneticVariation() {
+    public double getRMCMagneticVariation() {
         return mRMCMagneticVariation;
     }
 
-    public void setmRMCMagneticVariation(double magneticVariation) {
+    public void setRMCMagneticVariation(double magneticVariation) {
         this.mRMCMagneticVariation = magneticVariation;
         setChanged();
     }
 
-    public String getmRMCMagneticVariationDirection() {
+    public String getRMCMagneticVariationDirection() {
         return mRMCMagneticVariationDirection;
     }
 
-    public void setmRMCMagneticVariationDirection(String magneticVariationDirection) {
+    public void setRMCMagneticVariationDirection(String magneticVariationDirection) {
         this.mRMCMagneticVariationDirection = magneticVariationDirection;
         setChanged();
     }
 
-    public String getmRMCModeIndicator() {
+    public String getRMCModeIndicator() {
         return mRMCModeIndicator;
     }
 
-    public void setmRMCModeIndicator(String modeIndicator) {
+    public void setRMCModeIndicator(String modeIndicator) {
         this.mRMCModeIndicator = modeIndicator;
         setChanged();
     }
 
-    public String getmRMCStatus() {
+    public String getRMCStatus() {
         return mRMCStatus;
     }
 
-    public void setmRMCStatus(String status) {
+    public void setRMCStatus(String status) {
         this.mRMCStatus = status;
         setChanged();
     }
 
-    public UTCTime getmRMCTime() {
+    public UTCTime getRMCTime() {
         return mRMCTime;
     }
 
-    public void setmRMCTime(UTCTime time) {
+    public void setRMCTime(UTCTime time) {
         this.mRMCTime = time;
         setChanged();
     }

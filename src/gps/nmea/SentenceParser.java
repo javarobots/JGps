@@ -1,7 +1,9 @@
 
 package gps.nmea;
 
+import gps.data.Coordinate;
 import gps.data.GpsDataModel;
+import gps.data.Hemisphere;
 
 /**
  *
@@ -64,19 +66,29 @@ public class SentenceParser {
         //Ensure message is proper length
         if (values.length == 15){
 
-            //Set Latitude
+            //Set GGA Coordinate
             String latitude = values[2];
-            if (!latitude.isEmpty()){
-                mDataModel.setGgaLatitude(Double.parseDouble(latitude));
-                mDataModel.setGgaLatitudeHemisphere(values[3]);
-            }
-
-            //Set longitude
+            Hemisphere latHemisphere;
             String longitude = values[4];
-            if (!longitude.isEmpty()){
-                mDataModel.setGgaLongitude(Double.parseDouble(longitude));
-                mDataModel.setGgaLongitudeHemispere(values[5]);
+            Hemisphere lonHemisphere;
+            
+            if (values[3].equals("N")){
+                latHemisphere = Hemisphere.NORTH;
+            } else {
+                latHemisphere = Hemisphere.SOUTH;
             }
+            
+            if (values[5].equals("E")){
+                lonHemisphere = Hemisphere.EAST;
+            } else {
+                lonHemisphere = Hemisphere.WEST;
+            }
+            
+            Coordinate ggaCoordinate = new Coordinate(
+                    Double.parseDouble(latitude),
+                    latHemisphere,
+                    Double.parseDouble(longitude),
+                    lonHemisphere);
 
             //Set fix quality
             String fixQuality = values[6];

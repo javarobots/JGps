@@ -9,6 +9,12 @@ public class UTCTime {
     private int mHour;
     private int mMinute;
     private int mSecond;
+    
+    public UTCTime(int hour, int minute, int second){
+        mHour = hour;
+        mMinute = minute;
+        mSecond = second;
+    }
 
     public int getHour() {
         return mHour;

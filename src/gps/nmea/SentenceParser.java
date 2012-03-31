@@ -98,7 +98,11 @@ public class SentenceParser {
             //Set Geoidal height
             String geodialHeight = values[10];
             if (!geodialHeight.isEmpty()){
-                mDataModel.setGGAGeoidalHeight(Double.parseDouble(geodialHeight));
+                try{
+                    mDataModel.setGGAGeoidalHeight(Double.parseDouble(geodialHeight));
+                } catch (NumberFormatException ex){
+                    //Do nothing
+                }
             }
 
             mDataModel.notifyObservers();

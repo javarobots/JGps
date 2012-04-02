@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gps.data;
 
 /**
@@ -9,11 +5,17 @@ package gps.data;
  * @author javarobots
  */
 public class UTCDate {
-    
+
     private int mDay;
     private int mMonth;
     private int mYear;
-    
+
+    public UTCDate(){
+        mMonth = 04;
+        mDay = 01;
+        mYear = 12;
+    }
+
     public UTCDate(int day, int month, int year){
         mMonth = month;
         mDay = day;
@@ -43,7 +45,7 @@ public class UTCDate {
     public void setYear(int year) {
         this.mYear = year;
     }
-    
-    
-    
+
+
+
 }

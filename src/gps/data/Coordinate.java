@@ -5,12 +5,20 @@ package gps.data;
  * @author javarobots
  */
 public class Coordinate {
-    
+
     private double mLatitude;
     private Hemisphere mLatitudeHemisphere;
     private double mLongitude;
     private Hemisphere mLongitudeHemisphere;
-    
+
+    //A default Coordinate for initializing values.
+    public Coordinate(){
+        mLatitude = 30.5994;
+        mLatitudeHemisphere = Hemisphere.NORTH;
+        mLongitude = 87.1611;
+        mLongitudeHemisphere = Hemisphere.WEST;
+    }
+
     public Coordinate(double latitude, Hemisphere latHemisphere, double longitude, Hemisphere lonHemisphere){
         mLatitude = latitude;
         mLatitudeHemisphere = latHemisphere;
@@ -49,7 +57,7 @@ public class Coordinate {
     public void setLongitudeHemisphere(Hemisphere hemisphere) {
         mLongitudeHemisphere = hemisphere;
     }
-    
-    
-    
+
+
+
 }

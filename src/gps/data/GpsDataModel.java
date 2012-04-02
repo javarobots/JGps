@@ -10,8 +10,8 @@ import java.util.Observable;
 public class GpsDataModel extends Observable {
 
     //From $GPGGA sentence
-    private UTCTime mGGATime;
-    private Coordinate mGGACoordinate;
+    private UTCTime mGGATime = new UTCTime(0,0,0);
+    private Coordinate mGGACoordinate = new Coordinate();
     private int mGGAFixQuality = 0; //0=Invalid 1=GPS 2=DGPS
     private int mGGANumberOfSatelites = 0; //Number of satellites being tracked
     private double mGGAHdop = 99; //Horizontal dilution of precision
@@ -19,12 +19,12 @@ public class GpsDataModel extends Observable {
     private double mGGAGeoidalHeight = 0; //Geoidal height in meters
 
     //From $GPRMC sentence
-    private UTCTime mRMCTime;
+    private UTCTime mRMCTime = new UTCTime(0,0,0);;
     private String mRMCStatus = "V";
-    private Coordinate mRMCCoordinate;
+    private Coordinate mRMCCoordinate = new Coordinate();
     private double mRMCSpeedOverGround = 0; //Speed in knots
     private double mRMCCourseOverGround = 0; //Heading over ground
-    private UTCDate mRMCDate;
+    private UTCDate mRMCDate = new UTCDate();
     private double mRMCMagneticVariation;
     private String mRMCMagneticVariationDirection;
     private String mRMCModeIndicator = "N";
@@ -36,7 +36,14 @@ public class GpsDataModel extends Observable {
     private double mGSAPdop = 99;
     private double mGSAHdop = 99;
     private double mGSAVdop = 99;
-    
+
+    //From $GPVTG sentence
+    private double mVTGTrueCourse = 0;
+    private double mVTGMagneticCourse = 0;
+    private double mVTGSpeedInKnots = 0;
+    private double mVTGSpeedInKilometers = 0;
+    private String mVTGModeIndicator = "N";
+
     //---------------------- GGA Getter Setters ----------------------------
 
     public double getGGAHeightAboveSeaLevel() {
@@ -47,7 +54,7 @@ public class GpsDataModel extends Observable {
         this.mGGAHeightAboveSeaLevel = heightAboveSeaLevel;
         setChanged();
     }
-    
+
     public int getGgaFixQuality() {
         return mGGAFixQuality;
     }
@@ -92,7 +99,7 @@ public class GpsDataModel extends Observable {
         this.mGGATime = time;
         setChanged();
     }
-    
+
     public int getGGANumberOfSatelites() {
         return mGGANumberOfSatelites;
     }
@@ -101,10 +108,10 @@ public class GpsDataModel extends Observable {
         this.mGGANumberOfSatelites = numberOfSatelites;
         setChanged();
     }
-    
-    
-    
-    //---------------------- GSA Getter Setter -----------------------------    
+
+
+
+    //---------------------- GSA Getter Setter -----------------------------
 
     public int getGsaFixMode() {
         return mGSAFixType;
@@ -159,9 +166,9 @@ public class GpsDataModel extends Observable {
         this.mGSAPRNNumber = prnNumber;
         setChanged();
     }
-    
-    
-    
+
+
+
     //---------------------- RMC Getter Setter -----------------------------
 
     public double getRmcSpeedOverGround() {
@@ -244,6 +251,52 @@ public class GpsDataModel extends Observable {
         this.mRMCTime = time;
         setChanged();
     }
-    
-    
+
+    // --------------------------- VTG Getter Setter ------------------------
+
+    public double getVTGMagneticCourse() {
+        return mVTGMagneticCourse;
+    }
+
+    public void setVTGMagneticCourse(double magneticCourse) {
+        this.mVTGMagneticCourse = magneticCourse;
+        setChanged();
+    }
+
+    public String getVTGModeIndicator() {
+        return mVTGModeIndicator;
+    }
+
+    public void setVTGModeIndicator(String modeIndicator) {
+        this.mVTGModeIndicator = modeIndicator;
+        setChanged();
+    }
+
+    public double getVTGSpeedInKilometers() {
+        return mVTGSpeedInKilometers;
+    }
+
+    public void setVTGSpeedInKilometers(double speedInKilometers) {
+        this.mVTGSpeedInKilometers = speedInKilometers;
+        setChanged();
+    }
+
+    public double getVTGSpeedInKnots() {
+        return mVTGSpeedInKnots;
+    }
+
+    public void setVTGSpeedInKnots(double speedInKnots) {
+        this.mVTGSpeedInKnots = speedInKnots;
+        setChanged();
+    }
+
+    public double getVTGTrueCourse() {
+        return mVTGTrueCourse;
+    }
+
+    public void setVTGTrueCourse(double trueCourse) {
+        this.mVTGTrueCourse = trueCourse;
+        setChanged();
+    }
+
 }

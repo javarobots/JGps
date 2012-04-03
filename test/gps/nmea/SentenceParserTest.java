@@ -100,4 +100,31 @@ public class SentenceParserTest {
         //Test KPH parsing
         Assert.assertEquals(.26, mDataModel.getVTGSpeedInKilometers(), 0);
     }
+
+    /**
+     * Test of parseSentence method, of class SentenceParser.
+     */
+    @Test
+    public void testGLLParse() {
+        System.out.println("GLL Parser Test");
+        String sentence = "$GPGLL,3503.51296,N,10632.78261,W,122010,A*38";
+        mParser.parseSentence(sentence);
+        Coordinate coordinate = mDataModel.getGLLCoordinate();
+        if (coordinate == null){
+            Assert.fail("Coordinate is null");
+        } else {
+            //Test coordinate parsing
+            Assert.assertEquals((Double) coordinate.getLatitude(), new Double(3503.51296));
+            Assert.assertEquals((Double) coordinate.getLongitude(), new Double(10632.78261));
+            Assert.assertEquals(coordinate.getLatitudeHemisphere().getHemisphere(), "N");
+            Assert.assertEquals(coordinate.getLongitudeHemisphere().getHemisphere(), "W");
+            //Test status parsing
+            Assert.assertEquals("A", mDataModel.getGLLStatus());
+            //Test time parsing
+            UTCTime time = mDataModel.getGLLTime();
+            Assert.assertEquals(12, time.getHour());
+            Assert.assertEquals(20, time.getMinute());
+            Assert.assertEquals(10, time.getSecond());
+        }
+    }
 }

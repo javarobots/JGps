@@ -44,7 +44,7 @@ public class SentenceParser {
         } else if (splitMessage[0].equals("$GPGGA")){
             parseGga(sentence);
         } else if (splitMessage[0].equals("$GPGLL")){
-
+            parseGll(sentence);
         } else if (splitMessage[0].equals("$GPGSV")){
 
         } else if (splitMessage[0].equals("$GPVTG")){
@@ -242,6 +242,31 @@ public class SentenceParser {
 //                mDataModel.setVTGModeIndicator(splitMode[0]);
 //            }
 
+        }
+    }
+
+    private void parseGll(String message){
+        String[] values = message.split(",");
+
+        //Ensure proper length
+        if (values.length == 7){
+
+            //Set coordinate
+            Coordinate coordinate = parseCoordinate(values[1], values[2], values[3], values[4]);
+            mDataModel.setGLLCoordinate(coordinate);
+
+            //Set UTC time
+            UTCTime time = parseUtcTime(values[5]);
+            mDataModel.setGLLTime(time);
+
+            //Set status
+            String status = values[6];
+            if (status.contains("*")){
+                String[] splitStatus = status.split("\\*");
+                mDataModel.setGLLStatus(splitStatus[0]);
+            } else {
+
+            }
         }
     }
 

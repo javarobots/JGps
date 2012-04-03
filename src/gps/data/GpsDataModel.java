@@ -44,6 +44,11 @@ public class GpsDataModel extends Observable {
     private double mVTGSpeedInKilometers = 0;
     private String mVTGModeIndicator = "N";
 
+    //From $GPGLL sentence
+    private Coordinate mGLLCoordinate = new Coordinate();
+    private UTCTime mGLLTime = new UTCTime();
+    private String mGLLStatus = "V";
+
     //---------------------- GGA Getter Setters ----------------------------
 
     public double getGGAHeightAboveSeaLevel() {
@@ -298,5 +303,34 @@ public class GpsDataModel extends Observable {
         this.mVTGTrueCourse = trueCourse;
         setChanged();
     }
+
+    public Coordinate getGLLCoordinate() {
+        return mGLLCoordinate;
+    }
+
+    public void setGLLCoordinate(Coordinate coordinate) {
+        this.mGLLCoordinate = coordinate;
+        setChanged();
+    }
+
+    public String getGLLStatus() {
+        return mGLLStatus;
+    }
+
+    public void setGLLStatus(String status) {
+        this.mGLLStatus = status;
+        setChanged();
+    }
+
+    public UTCTime getGLLTime() {
+        return mGLLTime;
+    }
+
+    public void setGLLTime(UTCTime time) {
+        this.mGLLTime = time;
+        setChanged();
+    }
+
+
 
 }

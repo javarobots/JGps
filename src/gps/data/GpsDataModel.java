@@ -1,6 +1,7 @@
 
 package gps.data;
 
+import gps.nmea.SelectedSentences;
 import java.util.Observable;
 
 /**
@@ -8,6 +9,8 @@ import java.util.Observable;
  * @author javarobots
  */
 public class GpsDataModel extends Observable {
+
+    private SelectedSentences mSelectedSentences;
 
     //From $GPGGA sentence
     private UTCTime mGGATime = new UTCTime(0,0,0);
@@ -48,6 +51,18 @@ public class GpsDataModel extends Observable {
     private Coordinate mGLLCoordinate = new Coordinate();
     private UTCTime mGLLTime = new UTCTime();
     private String mGLLStatus = "V";
+
+    //Common Getter Setter
+
+    public SelectedSentences getSelectedSentences() {
+        return mSelectedSentences;
+    }
+
+    public void setSelectedSentences(SelectedSentences selectedSentences) {
+        this.mSelectedSentences = selectedSentences;
+        setChanged();
+    }
+
 
     //---------------------- GGA Getter Setters ----------------------------
 

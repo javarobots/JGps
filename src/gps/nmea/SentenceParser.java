@@ -34,22 +34,39 @@ public class SentenceParser {
         return sentences;
     }
 
-    public void parseSentence(String sentence) {
+    public boolean parseSentence(String sentence) {
+        boolean sentenceParsed = false;
         sentence = sentence.trim();
         String[] splitMessage = sentence.split(",");
         if (splitMessage[0].equals("$GPGSA")){
-            parseGsa(sentence);
+            if (mDataModel.getSelectedSentences().isParseGGA()){
+                parseGsa(sentence);
+                sentenceParsed = true;
+            }
         } else if (splitMessage[0].equals("$GPRMC")){
-            parseRmc(sentence);
+            if (mDataModel.getSelectedSentences().isParseRMC()){
+                parseRmc(sentence);
+                sentenceParsed = true;
+            }
         } else if (splitMessage[0].equals("$GPGGA")){
-            parseGga(sentence);
+            if (mDataModel.getSelectedSentences().isParseGGA()){
+                parseGga(sentence);
+                sentenceParsed = true;
+            }
         } else if (splitMessage[0].equals("$GPGLL")){
-            parseGll(sentence);
+            if (mDataModel.getSelectedSentences().isParseGLL()){
+                parseGll(sentence);
+                sentenceParsed = true;
+            }
         } else if (splitMessage[0].equals("$GPGSV")){
 
         } else if (splitMessage[0].equals("$GPVTG")){
-            parseVtg(sentence);
+            if (mDataModel.getSelectedSentences().isParseVTG()){
+                parseVtg(sentence);
+                sentenceParsed = true;
+            }
         }
+        return sentenceParsed;
     }
 
     /**

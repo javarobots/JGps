@@ -13,9 +13,9 @@ public class Coordinate {
 
     //A default Coordinate for initializing values.
     public Coordinate(){
-        mLatitude = 30.5994;
+        mLatitude = 3035.964;
         mLatitudeHemisphere = Hemisphere.NORTH;
-        mLongitude = 87.1611;
+        mLongitude = 08709.666;
         mLongitudeHemisphere = Hemisphere.WEST;
     }
 

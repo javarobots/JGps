@@ -13,6 +13,7 @@ public class SentenceParserTest {
 
     private GpsDataModel mDataModel;
     private SentenceParser mParser;
+    private SelectedSentences mSelectedSentences;
 
     public SentenceParserTest() {
     }
@@ -28,6 +29,8 @@ public class SentenceParserTest {
     @Before
     public void setUp() {
         mDataModel = new GpsDataModel();
+        mSelectedSentences = new SelectedSentences();
+        mDataModel.setSelectedSentences(mSelectedSentences);
         mParser = new SentenceParser(mDataModel);
     }
 
@@ -55,25 +58,29 @@ public class SentenceParserTest {
     public void testGGAParse() {
         System.out.println("GGA Parser Test");
         String sentence = "$GPGGA,122010,3503.51296,N,10632.78261,W,2,12,19.2,1653.9,M,-23.0,M,,*7E";
-        mParser.parseSentence(sentence);
+        boolean sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(false, sentenceParsed);
+        mSelectedSentences.setParseGGA(true);
+        sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(true, sentenceParsed);
         Coordinate coordinate = mDataModel.getGGACoordinate();
         if (coordinate == null){
             Assert.fail("Coordinate is null");
         } else {
             //Test time parsing
             UTCTime time = mDataModel.getGGATime();
-            Assert.assertEquals(time.getHour(), 12);
-            Assert.assertEquals(time.getMinute(), 20);
-            Assert.assertEquals(time.getSecond(), 10);
+            Assert.assertEquals(12, time.getHour());
+            Assert.assertEquals(20, time.getMinute());
+            Assert.assertEquals(10, time.getSecond());
             //Test coordinate parsing
-            Assert.assertEquals((Double) coordinate.getLatitude(), new Double(3503.51296));
-            Assert.assertEquals((Double) coordinate.getLongitude(), new Double(10632.78261));
-            Assert.assertEquals(coordinate.getLatitudeHemisphere().getHemisphere(), "N");
-            Assert.assertEquals(coordinate.getLongitudeHemisphere().getHemisphere(), "W");
+            Assert.assertEquals(new Double(3503.51296), (Double) coordinate.getLatitude());
+            Assert.assertEquals(new Double(10632.78261), (Double) coordinate.getLongitude());
+            Assert.assertEquals("N", coordinate.getLatitudeHemisphere().getHemisphere());
+            Assert.assertEquals("W", coordinate.getLongitudeHemisphere().getHemisphere());
             //Test quality parsing
-            Assert.assertEquals(mDataModel.getGgaFixQuality(), 2);
+            Assert.assertEquals(2, mDataModel.getGgaFixQuality());
             //Test number of satellites in use
-            Assert.assertEquals(mDataModel.getGGANumberOfSatelites(), 12);
+            Assert.assertEquals(12, mDataModel.getGGANumberOfSatelites());
             //Test HDOP parsing
             Assert.assertEquals(19.2, mDataModel.getGGAHdop(), 0);
             //Test antenna height
@@ -90,7 +97,11 @@ public class SentenceParserTest {
     public void testVTGParse() {
         System.out.println("VTG Parser Test");
         String sentence = "$GPVTG,139.4,T,139.4,M,0.14,N,0.26,K*4F";
-        mParser.parseSentence(sentence);
+        boolean sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(false, sentenceParsed);
+        mSelectedSentences.setParseVTG(true);
+        sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(true, sentenceParsed);
         //Test true course parsing
         Assert.assertEquals(139.4, mDataModel.getVTGTrueCourse(), 0);
         //Test magnetic course parsing
@@ -108,7 +119,11 @@ public class SentenceParserTest {
     public void testGLLParse() {
         System.out.println("GLL Parser Test");
         String sentence = "$GPGLL,3503.51296,N,10632.78261,W,122010,A*38";
-        mParser.parseSentence(sentence);
+        boolean sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(false, sentenceParsed);
+        mSelectedSentences.setParseGLL(true);
+        sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(true, sentenceParsed);
         Coordinate coordinate = mDataModel.getGLLCoordinate();
         if (coordinate == null){
             Assert.fail("Coordinate is null");

@@ -39,7 +39,7 @@ public class SentenceParser {
         sentence = sentence.trim();
         String[] splitMessage = sentence.split(",");
         if (splitMessage[0].equals("$GPGSA")){
-            if (mDataModel.getSelectedSentences().isParseGGA()){
+            if (mDataModel.getSelectedSentences().isParseGSA()){
                 parseGsa(sentence);
                 sentenceParsed = true;
             }

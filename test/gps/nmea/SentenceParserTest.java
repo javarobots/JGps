@@ -142,4 +142,34 @@ public class SentenceParserTest {
             Assert.assertEquals(10, time.getSecond());
         }
     }
+
+    /**
+     * Test of parseSentence method, of class SentenceParser.
+     *
+     * Mode
+     * Fix PRN
+     * PDOP
+     * HDOP
+     * VDOP
+     *
+     */
+    @Test
+    public void testGSAParse() {
+        System.out.println("GSA Parser Test");
+        String sentence = "$GPGSA,A,3,02,05,15,18,25,26,29,30,51,12,16,21,13.6,19.2,9.6*31";
+        boolean sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(false, sentenceParsed);
+        mSelectedSentences.setParseGSA(true);
+        sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(true, sentenceParsed);
+        //!jdp - parser does not yet parse this
+//        //Test mode parsing
+//        Assert.assertEquals("A", mDataModel.getmGSAMode());
+        //Test status parsing
+        Assert.assertEquals(3, mDataModel.getGsaFixMode());
+        //Test dilution of precision parsing
+        Assert.assertEquals(13.6, mDataModel.getGsaPdop(), 0);
+        Assert.assertEquals(19.2, mDataModel.getGsaHdop(), 0);
+        Assert.assertEquals(9.6, mDataModel.getGsaVdop(), 0);
+    }
 }

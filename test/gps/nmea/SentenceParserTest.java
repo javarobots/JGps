@@ -2,6 +2,7 @@ package gps.nmea;
 
 import gps.data.Coordinate;
 import gps.data.GpsDataModel;
+import gps.data.UTCDate;
 import gps.data.UTCTime;
 import org.junit.*;
 
@@ -146,12 +147,6 @@ public class SentenceParserTest {
     /**
      * Test of parseSentence method, of class SentenceParser.
      *
-     * Mode
-     * Fix PRN
-     * PDOP
-     * HDOP
-     * VDOP
-     *
      */
     @Test
     public void testGSAParse() {
@@ -171,5 +166,50 @@ public class SentenceParserTest {
         Assert.assertEquals(13.6, mDataModel.getGsaPdop(), 0);
         Assert.assertEquals(19.2, mDataModel.getGsaHdop(), 0);
         Assert.assertEquals(9.6, mDataModel.getGsaVdop(), 0);
+    }
+
+    @Test
+    public void testRMCParse() {
+        System.out.println("RMC Parser Test");
+        String sentence = "$GPRMC,122010,A,3503.51296,N,10632.78261,W,0.08,118.4,010412,0.0,E*56";
+        boolean sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(true, sentenceParsed);
+        mSelectedSentences.setParseRMC(false);
+        sentenceParsed = mParser.parseSentence(sentence);
+        Assert.assertEquals(false, sentenceParsed);
+
+        //Test time parsing
+        UTCTime time = mDataModel.getRMCTime();
+        Assert.assertEquals(12, time.getHour());
+        Assert.assertEquals(20, time.getMinute());
+        Assert.assertEquals(10, time.getSecond());
+
+        //Test status parse
+        Assert.assertEquals("A", mDataModel.getRMCStatus());
+
+        //Test coordinate parse
+        Coordinate coordinate = mDataModel.getRMCCoordinate();
+        Assert.assertEquals(3503.51296, coordinate.getLatitude(), 0);
+        Assert.assertEquals(10632.78261, coordinate.getLongitude(), 0);
+        Assert.assertEquals("N", coordinate.getLatitudeHemisphere().getHemisphere());
+        Assert.assertEquals("W", coordinate.getLongitudeHemisphere().getHemisphere());
+
+        //Test speed parse
+        Assert.assertEquals(0.08, mDataModel.getRmcSpeedOverGround(), 0);
+
+        //Test course parse
+        Assert.assertEquals(118.4, mDataModel.getRmcTrueCourse(), 0);
+
+        //Test date parse
+        UTCDate date = mDataModel.getRMCDate();
+        Assert.assertEquals(1, date.getDay());
+        Assert.assertEquals(4, date.getMonth());
+        Assert.assertEquals(12, date.getYear());
+
+        //Test magnetic variation
+        Assert.assertEquals(0.0, mDataModel.getRMCMagneticVariation(), 0);
+
+        //Test variation direction
+        Assert.assertEquals("E", mDataModel.getRMCMagneticVariationDirection());
     }
 }

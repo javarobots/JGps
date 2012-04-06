@@ -157,15 +157,52 @@ public class SentenceParserTest {
         mSelectedSentences.setParseGSA(true);
         sentenceParsed = mParser.parseSentence(sentence);
         Assert.assertEquals(true, sentenceParsed);
-        //!jdp - parser does not yet parse this
-//        //Test mode parsing
-//        Assert.assertEquals("A", mDataModel.getmGSAMode());
+        //Test mode parsing
+        Assert.assertEquals("A", mDataModel.getmGSAMode());
         //Test status parsing
         Assert.assertEquals(3, mDataModel.getGsaFixMode());
+        //Test PRN parsing
+        Assert.assertEquals(02, mDataModel.getmGSAPRNNumber()[0]);
+        Assert.assertEquals(05, mDataModel.getmGSAPRNNumber()[1]);
+        Assert.assertEquals(15, mDataModel.getmGSAPRNNumber()[2]);
+        Assert.assertEquals(18, mDataModel.getmGSAPRNNumber()[3]);
+        Assert.assertEquals(25, mDataModel.getmGSAPRNNumber()[4]);
+        Assert.assertEquals(26, mDataModel.getmGSAPRNNumber()[5]);
+        Assert.assertEquals(29, mDataModel.getmGSAPRNNumber()[6]);
+        Assert.assertEquals(30, mDataModel.getmGSAPRNNumber()[7]);
+        Assert.assertEquals(51, mDataModel.getmGSAPRNNumber()[8]);
+        Assert.assertEquals(12, mDataModel.getmGSAPRNNumber()[9]);
+        Assert.assertEquals(16, mDataModel.getmGSAPRNNumber()[10]);
+        Assert.assertEquals(21, mDataModel.getmGSAPRNNumber()[11]);
         //Test dilution of precision parsing
         Assert.assertEquals(13.6, mDataModel.getGsaPdop(), 0);
         Assert.assertEquals(19.2, mDataModel.getGsaHdop(), 0);
         Assert.assertEquals(9.6, mDataModel.getGsaVdop(), 0);
+    }
+
+    /**
+     * Test of parseSentence method, of class SentenceParser.
+     *
+     */
+    @Test
+    public void testGSAEmptyPRNParse() {
+        System.out.println("GSA Empty PRN Parser Test");
+        String sentence = "$GPGSA,A,3,02,05,15,18,25,26,29,,51,12,16,,13.6,19.2,9.6*31";
+        mSelectedSentences.setParseGSA(true);
+        mParser.parseSentence(sentence);
+        //Test PRN parsing
+        Assert.assertEquals(02, mDataModel.getmGSAPRNNumber()[0]);
+        Assert.assertEquals(05, mDataModel.getmGSAPRNNumber()[1]);
+        Assert.assertEquals(15, mDataModel.getmGSAPRNNumber()[2]);
+        Assert.assertEquals(18, mDataModel.getmGSAPRNNumber()[3]);
+        Assert.assertEquals(25, mDataModel.getmGSAPRNNumber()[4]);
+        Assert.assertEquals(26, mDataModel.getmGSAPRNNumber()[5]);
+        Assert.assertEquals(29, mDataModel.getmGSAPRNNumber()[6]);
+        Assert.assertEquals(0, mDataModel.getmGSAPRNNumber()[7]);
+        Assert.assertEquals(51, mDataModel.getmGSAPRNNumber()[8]);
+        Assert.assertEquals(12, mDataModel.getmGSAPRNNumber()[9]);
+        Assert.assertEquals(16, mDataModel.getmGSAPRNNumber()[10]);
+        Assert.assertEquals(0, mDataModel.getmGSAPRNNumber()[11]);
     }
 
     @Test

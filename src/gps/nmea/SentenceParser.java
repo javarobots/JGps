@@ -198,6 +198,24 @@ public class SentenceParser {
     private void parseGsa(String message) {
         String[] values = message.split(",");
         if (values.length == 18){
+            //Set fix mode
+            String fixMode = values[1];
+            mDataModel.setmGSAMode(fixMode);
+
+            //Set fix type
+            String fixType = values[2];
+            if (!fixType.isEmpty()){
+                mDataModel.setGsaFixType(Integer.parseInt(fixType));
+            }
+
+            //Set PRN numbers
+            int[] prnArray = new int[12];
+            for (int i = 3; i < 15; i++){
+                if (!values[i].isEmpty()){
+                    prnArray[i-3] = Integer.parseInt(values[i]);
+                }
+            }
+            mDataModel.setmGSAPRNNumber(prnArray);
 
             //Set PDOP
             String pdop = values[15];
@@ -213,16 +231,8 @@ public class SentenceParser {
 
             //Set VDOP
             String vdop = values[17];
-            String[] vdopSplit = vdop.split("\\*");
-            vdop = vdopSplit[0];
             if (!vdop.isEmpty()){
-                mDataModel.setGsaVdop(Double.parseDouble(vdop));
-            }
-
-            //Set fix mode
-            String fixMode = values[2];
-            if (!fixMode.isEmpty()){
-                mDataModel.setGsaFixMode(Integer.parseInt(fixMode));
+                mDataModel.setGsaVdop(Double.parseDouble(parseFromChecksum(vdop)));
             }
         }
     }

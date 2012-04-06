@@ -129,8 +129,9 @@ public class SentenceParser {
      * @param message
      */
     private void parseRmc(String message){
-        String[] values = message.split(",");
-        if (values.length == 13){
+        Checksum checksum = new Checksum(message);
+        if (checksum.isValid()){
+            String[] values = message.split(",");
 
             //Set UTC Time
             String utcTime = values[1];
@@ -176,13 +177,15 @@ public class SentenceParser {
             //Set magentic variation direcion
             String varDirection = values[11];
             if (!varDirection.isEmpty()){
-                mDataModel.setRMCMagneticVariationDirection(varDirection);
+                mDataModel.setRMCMagneticVariationDirection(parseFromChecksum(varDirection));
             }
 
             //Set mode indicator
-            String mode = values[12];
-            if (!mode.isEmpty()){
-                mDataModel.setRMCModeIndicator(mode);
+            if (values.length == 13){
+                String mode = values[12];
+                if (!mode.isEmpty()){
+                    mDataModel.setRMCModeIndicator(parseFromChecksum(mode));
+                }
             }
 
         }
@@ -341,6 +344,12 @@ public class SentenceParser {
                     lonHemisphere);
 
         return coordinate;
+    }
+
+    //Parse values from checksum
+    private String parseFromChecksum(String value){
+        String[] splitVale = value.split("\\*");
+        return splitVale[0];
     }
 
 }

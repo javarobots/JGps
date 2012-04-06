@@ -137,7 +137,7 @@ public class GpsDataModel extends Observable {
         return mGSAFixType;
     }
 
-    public void setGsaFixMode(int fixMode) {
+    public void setGsaFixType(int fixMode) {
         this.mGSAFixType = fixMode;
         setChanged();
     }

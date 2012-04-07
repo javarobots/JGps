@@ -2,6 +2,7 @@
 package gps.data;
 
 import gps.nmea.SelectedSentences;
+import java.util.List;
 import java.util.Observable;
 
 /**
@@ -51,6 +52,9 @@ public class GpsDataModel extends Observable {
     private Coordinate mGLLCoordinate = new Coordinate();
     private UTCTime mGLLTime = new UTCTime();
     private String mGLLStatus = "V";
+
+    //From $GPGSV sentence
+    private List<SatelliteInView> mSatellitesInView;
 
     //Common Getter Setter
 
@@ -346,6 +350,13 @@ public class GpsDataModel extends Observable {
         setChanged();
     }
 
+    public List<SatelliteInView> getSatellitesInView() {
+        return mSatellitesInView;
+    }
 
+    public void setSatellitesInView(List<SatelliteInView> satellitesInView) {
+        this.mSatellitesInView = satellitesInView;
+        setChanged();
+    }
 
 }

@@ -12,6 +12,7 @@ public class SelectedSentences {
     private boolean mParseGSA = false;
     private boolean mParseRMC = true;
     private boolean mParseVTG = false;
+    private boolean mParseGSV = false;
 
     public boolean isParseGGA() {
         return mParseGGA;
@@ -52,6 +53,15 @@ public class SelectedSentences {
     public void setParseVTG(boolean parseVTG) {
         this.mParseVTG = parseVTG;
     }
+
+    public boolean isParseGSV() {
+        return mParseGSV;
+    }
+
+    public void setParseGSV(boolean parseGSV) {
+        this.mParseGSV = parseGSV;
+    }
+
 
 
 

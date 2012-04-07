@@ -1,9 +1,7 @@
 package gps.nmea;
 
-import gps.data.Coordinate;
-import gps.data.GpsDataModel;
-import gps.data.UTCDate;
-import gps.data.UTCTime;
+import gps.data.*;
+import java.util.List;
 import org.junit.*;
 
 /**
@@ -248,5 +246,65 @@ public class SentenceParserTest {
 
         //Test variation direction
         Assert.assertEquals("E", mDataModel.getRMCMagneticVariationDirection());
+    }
+
+    @Test
+    public void testGSVParse() {
+        System.out.println("GSV Parser Test");
+        String[] sentences = {"$GPGSV,3,1,12,02,08,085,27,05,33,045,16,15,33,148,22,18,32,228,31*72",
+                                "$GPGSV,3,2,12,25,25,211,20,26,35,095,20,29,86,321,41,30,16,306,22*76",
+                                "$GPGSV,3,3,12,51,49,181,34,12,03,179,54,16,02,329,54,21,38,294,54*78"};
+        boolean sentenceParsed = mParser.parseSentence(sentences[0]);
+        Assert.assertEquals(false, sentenceParsed);
+        mSelectedSentences.setParseGSV(true);
+        sentenceParsed = mParser.parseSentence(sentences[0]);
+        Assert.assertEquals(true, sentenceParsed);
+        sentenceParsed = mParser.parseSentence(sentences[1]);
+        Assert.assertEquals(true, sentenceParsed);
+        sentenceParsed = mParser.parseSentence(sentences[2]);
+        Assert.assertEquals(true, sentenceParsed);
+
+        //Get Satellites In View list and compare its size
+        List<SatelliteInView> satellitesInView = mDataModel.getSatellitesInView();
+        Assert.assertEquals(12,satellitesInView.size());
+
+        int[] expectedValues = {2,8,85,27,
+                                5,33,45,16,
+                                15,33,148,22,
+                                18,32,228,31,
+                                25,25,211,20,
+                                26,35,95,20,
+                                29,86,321,41,
+                                30,16,306,22,
+                                51,49,181,34,
+                                12,03,179,54,
+                                16,02,329,54,
+                                21,38,294,54};
+        for (int i = 0; i < 12; i++){
+            SatelliteInView currentSatellite = satellitesInView.get(i);
+            Assert.assertEquals(expectedValues[(i*4) + 0], currentSatellite.getPrnNumber());
+            Assert.assertEquals(expectedValues[(i*4) + 1], currentSatellite.getElevation());
+            Assert.assertEquals(expectedValues[(i*4) + 2], currentSatellite.getAzimuth());
+            Assert.assertEquals(expectedValues[(i*4) + 3], currentSatellite.getCarrierToNoiseRatio());
+        }
+
+        //Parse set again and ensure lists reset
+        sentenceParsed = mParser.parseSentence(sentences[0]);
+        Assert.assertEquals(true, sentenceParsed);
+        sentenceParsed = mParser.parseSentence(sentences[1]);
+        Assert.assertEquals(true, sentenceParsed);
+        sentenceParsed = mParser.parseSentence(sentences[2]);
+        Assert.assertEquals(true, sentenceParsed);
+
+        //Get Satellites In View list and compare its size
+        satellitesInView = mDataModel.getSatellitesInView();
+        Assert.assertEquals(12,satellitesInView.size());
+        for (int i = 0; i < 12; i++){
+            SatelliteInView currentSatellite = satellitesInView.get(i);
+            Assert.assertEquals(expectedValues[(i*4) + 0], currentSatellite.getPrnNumber());
+            Assert.assertEquals(expectedValues[(i*4) + 1], currentSatellite.getElevation());
+            Assert.assertEquals(expectedValues[(i*4) + 2], currentSatellite.getAzimuth());
+            Assert.assertEquals(expectedValues[(i*4) + 3], currentSatellite.getCarrierToNoiseRatio());
+        }
     }
 }

@@ -2,6 +2,8 @@
 package gps.nmea;
 
 import gps.data.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -11,6 +13,10 @@ public class SentenceParser {
 
     private GpsDataModel mDataModel;
     private boolean mBeginOfSentence = false;
+    private int mNumberOfGSVSentences = 0;
+    private int mCurrentGSVSentence = 0;
+    private int mNumberParsedSatellites = 0;
+    private List<SatelliteInView> mSatellitesInView;
 
     public SentenceParser(GpsDataModel model){
         mDataModel = model;
@@ -59,7 +65,10 @@ public class SentenceParser {
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGSV")){
-
+            if (mDataModel.getSelectedSentences().isParseGSV()){
+                parseGsv(sentence);
+                sentenceParsed = true;
+            }
         } else if (splitMessage[0].equals("$GPVTG")){
             if (mDataModel.getSelectedSentences().isParseVTG()){
                 parseVtg(sentence);
@@ -360,6 +369,38 @@ public class SentenceParser {
     private String parseFromChecksum(String value){
         String[] splitVale = value.split("\\*");
         return splitVale[0];
+    }
+
+    private void parseGsv(String message) {
+        Checksum checksum = new Checksum(message);
+        if (checksum.isValid()){
+            String[] values = message.split(",");
+            mNumberOfGSVSentences = Integer.parseInt(values[1]);
+            mCurrentGSVSentence++;
+            int totalSatellites = Integer.parseInt(values[3]);
+
+            //Parse message
+            if (mCurrentGSVSentence == 1){
+                mSatellitesInView = new ArrayList<>();
+            }
+            for (int i = 0; i < 4; i++){
+                int prn = Integer.parseInt(values[4+(i*4)]);
+                int elevation = Integer.parseInt(values[5+(i*4)]);
+                int azimuth = Integer.parseInt(values[6+(i*4)]);
+                int carrierToNoise = Integer.parseInt(parseFromChecksum(values[7+(i*4)]));
+                SatelliteInView satInView = new SatelliteInView(prn,elevation,azimuth,carrierToNoise);
+                mSatellitesInView.add(satInView);
+                if (totalSatellites == mSatellitesInView.size()){
+                    break;
+                }
+            }
+
+            if (mCurrentGSVSentence == mNumberOfGSVSentences){
+                mCurrentGSVSentence = 0;
+                mDataModel.setSatellitesInView(mSatellitesInView);
+            }
+
+        }
     }
 
 }

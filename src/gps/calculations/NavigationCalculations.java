@@ -1,4 +1,3 @@
-
 package gps.calculations;
 
 import java.text.DecimalFormat;

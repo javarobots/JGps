@@ -83,6 +83,7 @@ public class NavigationCalculationsTest {
 
     /**
      * Test of distanceInFeet method, of class NavigationCalculations.
+     * The distance value and coordinates obtained from Google Earth.
      */
     @Test
     public void testDistanceInFeet() {
@@ -98,6 +99,7 @@ public class NavigationCalculationsTest {
 
     /**
      * Test of headingToPoint method, of class NavigationCalculations.
+     * The heading value and coordinates obtained from Google Earth.
      */
     @Test
     public void testHeadingToPoint() {

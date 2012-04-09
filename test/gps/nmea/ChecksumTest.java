@@ -4,6 +4,7 @@
  */
 package gps.nmea;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.*;
 
 /**
@@ -40,10 +41,10 @@ public class ChecksumTest {
         Checksum instance = new Checksum("$GPVTG,139.4,T,139.4,M,0.14,N,0.26,K*4F");
         boolean expResult = true;
         boolean result = instance.isValid();
-        Assert.assertEquals(expResult, result);
+        assertEquals(expResult, result);
         instance = new Checksum("$GPVTG,139.4,T,139.4,M,0.14,N,0.26,K*5F");
         expResult = false;
         result = instance.isValid();
-        Assert.assertEquals(expResult, result);
+        assertEquals(expResult, result);
     }
 }

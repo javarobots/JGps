@@ -16,7 +16,7 @@ public class DistanceConversion {
      * @return
      */
     public static double metersToFeet(double meters){
-        return meters * 3.048;
+        return meters * 3.2808399;
     }
 
     /**
@@ -25,7 +25,7 @@ public class DistanceConversion {
      * @return
      */
     public static double feetToMeters(double feet){
-        return feet / 3.048;
+        return feet / 3.2808399;
     }
 
 }

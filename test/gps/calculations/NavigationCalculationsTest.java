@@ -87,15 +87,13 @@ public class NavigationCalculationsTest {
     @Test
     public void testDistanceInFeet() {
         System.out.println("distanceInFeet");
-        double lat1 = 0.0;
-        double lon1 = 0.0;
-        double lat2 = 0.0;
-        double lon2 = 0.0;
-        double expResult = 0.0;
+        double lat1 = mInstance.degreesToRad(35.057761);
+        double lon1 = mInstance.degreesToRad(106.547575);
+        double lat2 = mInstance.degreesToRad(35.057958);
+        double lon2 = mInstance.degreesToRad(106.547383);
+        double expResult = 90;
         double result = mInstance.distanceInFeet(lat1, lon1, lat2, lon2);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result, 2.0);
     }
 
     /**
@@ -104,14 +102,12 @@ public class NavigationCalculationsTest {
     @Test
     public void testHeadingToPoint() {
         System.out.println("headingToPoint");
-        double lat1 = 0.0;
-        double lon1 = 0.0;
-        double lat2 = 0.0;
-        double lon2 = 0.0;
-        double expResult = 0.0;
+        double lat1 = mInstance.degreesToRad(35.057761);
+        double lon1 = mInstance.degreesToRad(106.547575);
+        double lat2 = mInstance.degreesToRad(35.057958);
+        double lon2 = mInstance.degreesToRad(106.547383);
+        double expResult = 38;
         double result = mInstance.headingToPoint(lat1, lon1, lat2, lon2);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result, 1);
     }
 }

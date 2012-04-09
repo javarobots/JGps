@@ -37,7 +37,7 @@ public class ChecksumTest {
      */
     @Test
     public void testIsValid() {
-        System.out.println("isValid Checksum Test");
+        System.out.println("Test isValid Checksum");
         Checksum instance = new Checksum("$GPVTG,139.4,T,139.4,M,0.14,N,0.26,K*4F");
         boolean expResult = true;
         boolean result = instance.isValid();

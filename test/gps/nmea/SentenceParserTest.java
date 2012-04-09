@@ -43,7 +43,7 @@ public class SentenceParserTest {
      */
     @Test
     public void testProcessData() {
-        System.out.println("Process Data String Test");
+        System.out.println("Test Process Data String");
         String data = "3.0,M,,*7A,$GPGGA,122010,3503.51296,N,10632.78261,W,2,12,19.2,1653.9,M,-23.0,M,,*7E$GPGGA,122407,3503.51489,N,10632.78574,W,2,4,19.2,1656.9,M,-23.0,M,,*45";
         String[] processResult = mParser.processData(data);
         assertTrue(processResult.length == 3);
@@ -56,7 +56,7 @@ public class SentenceParserTest {
      */
     @Test
     public void testGGAParse() {
-        System.out.println("GGA Parser Test");
+        System.out.println("Test GGA Parser");
         String sentence = "$GPGGA,122010,3503.51296,N,10632.78261,W,2,12,19.2,1653.9,M,-23.0,M,,*7E";
         boolean sentenceParsed = mParser.parseSentence(sentence);
         assertEquals(false, sentenceParsed);
@@ -95,7 +95,7 @@ public class SentenceParserTest {
      */
     @Test
     public void testVTGParse() {
-        System.out.println("VTG Parser Test");
+        System.out.println("Test VTG Parser");
         String sentence = "$GPVTG,139.4,T,139.4,M,0.14,N,0.26,K*4F";
         boolean sentenceParsed = mParser.parseSentence(sentence);
         assertEquals(false, sentenceParsed);
@@ -117,7 +117,7 @@ public class SentenceParserTest {
      */
     @Test
     public void testGLLParse() {
-        System.out.println("GLL Parser Test");
+        System.out.println("Test GLL Parser");
         String sentence = "$GPGLL,3503.51296,N,10632.78261,W,122010,A*38";
         boolean sentenceParsed = mParser.parseSentence(sentence);
         assertEquals(false, sentenceParsed);
@@ -149,7 +149,7 @@ public class SentenceParserTest {
      */
     @Test
     public void testGSAParse() {
-        System.out.println("GSA Parser Test");
+        System.out.println("Test GSA Parser");
         String sentence = "$GPGSA,A,3,02,05,15,18,25,26,29,30,51,12,16,21,13.6,19.2,9.6*31";
         boolean sentenceParsed = mParser.parseSentence(sentence);
         assertEquals(false, sentenceParsed);
@@ -185,7 +185,7 @@ public class SentenceParserTest {
      */
     @Test
     public void testGSAEmptyPRNParse() {
-        System.out.println("GSA Empty PRN Parser Test");
+        System.out.println("Test GSA Empty PRN Parser");
         String sentence = "$GPGSA,A,3,02,05,15,18,25,26,29,,51,12,16,,13.6,19.2,9.6*31";
         mSelectedSentences.setParseGSA(true);
         mParser.parseSentence(sentence);
@@ -206,7 +206,7 @@ public class SentenceParserTest {
 
     @Test
     public void testRMCParse() {
-        System.out.println("RMC Parser Test");
+        System.out.println("Test RMC Parser");
         String sentence = "$GPRMC,122010,A,3503.51296,N,10632.78261,W,0.08,118.4,010412,0.0,E*56";
         boolean sentenceParsed = mParser.parseSentence(sentence);
         assertEquals(true, sentenceParsed);
@@ -251,7 +251,7 @@ public class SentenceParserTest {
 
     @Test
     public void testGSVParse() {
-        System.out.println("GSV Parser Test");
+        System.out.println("Test GSV Parser");
         String[] sentences = {"$GPGSV,3,1,12,02,08,085,27,05,33,045,16,15,33,148,22,18,32,228,31*72",
                                 "$GPGSV,3,2,12,25,25,211,20,26,35,095,20,29,86,321,41,30,16,306,22*76",
                                 "$GPGSV,3,3,12,51,49,181,34,12,03,179,54,16,02,329,54,21,38,294,54*78"};

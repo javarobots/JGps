@@ -1,65 +1,74 @@
 
 package gps.nmea;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author javarobots
  */
 public class SelectedSentences {
 
-    private boolean mParseGGA = false;
-    private boolean mParseGLL = false;
-    private boolean mParseGSA = false;
-    private boolean mParseRMC = true;
-    private boolean mParseVTG = false;
-    private boolean mParseGSV = false;
+    private Map<NmeaSentences,Boolean> mSelectedSentenceMap;
+
+    public SelectedSentences(){
+        //Init map and set defaults
+        mSelectedSentenceMap  = new HashMap<>();
+        mSelectedSentenceMap.put(NmeaSentences.GGA, false);
+        mSelectedSentenceMap.put(NmeaSentences.GLL, false);
+        mSelectedSentenceMap.put(NmeaSentences.GSA, false);
+        mSelectedSentenceMap.put(NmeaSentences.RMC, true);
+        mSelectedSentenceMap.put(NmeaSentences.VTG, false);
+        mSelectedSentenceMap.put(NmeaSentences.GSV, false);
+    }
 
     public boolean isParseGGA() {
-        return mParseGGA;
+        return mSelectedSentenceMap.get(NmeaSentences.GGA);
     }
 
     public void setParseGGA(boolean parseGGA) {
-        this.mParseGGA = parseGGA;
+        mSelectedSentenceMap.put(NmeaSentences.GGA, parseGGA);
     }
 
     public boolean isParseGLL() {
-        return mParseGLL;
+        return mSelectedSentenceMap.get(NmeaSentences.GLL);
     }
 
     public void setParseGLL(boolean parseGLL) {
-        this.mParseGLL = parseGLL;
+        mSelectedSentenceMap.put(NmeaSentences.GLL, parseGLL);
     }
 
     public boolean isParseGSA() {
-        return mParseGSA;
+        return mSelectedSentenceMap.get(NmeaSentences.GSA);
     }
 
     public void setParseGSA(boolean parseGSA) {
-        this.mParseGSA = parseGSA;
+        mSelectedSentenceMap.put(NmeaSentences.GSA, parseGSA);
     }
 
     public boolean isParseRMC() {
-        return mParseRMC;
+        return mSelectedSentenceMap.get(NmeaSentences.RMC);
     }
 
     public void setParseRMC(boolean parseRMC) {
-        this.mParseRMC = parseRMC;
+        mSelectedSentenceMap.put(NmeaSentences.RMC, parseRMC);
     }
 
     public boolean isParseVTG() {
-        return mParseVTG;
+        return mSelectedSentenceMap.get(NmeaSentences.VTG);
     }
 
     public void setParseVTG(boolean parseVTG) {
-        this.mParseVTG = parseVTG;
+        mSelectedSentenceMap.put(NmeaSentences.VTG, parseVTG);
     }
 
     public boolean isParseGSV() {
-        return mParseGSV;
+        return mSelectedSentenceMap.get(NmeaSentences.GSV);
     }
 
     public void setParseGSV(boolean parseGSV) {
-        this.mParseGSV = parseGSV;
+        mSelectedSentenceMap.put(NmeaSentences.GSV, parseGSV);
     }
 
 

@@ -40,36 +40,43 @@ public class SentenceParser {
         return sentences;
     }
 
+    @SuppressWarnings("ConvertToStringSwitch")
     public boolean parseSentence(String sentence) {
         boolean sentenceParsed = false;
         sentence = sentence.trim();
         String[] splitMessage = sentence.split(",");
         if (splitMessage[0].equals("$GPGSA")){
+            System.out.println("GSA message");
             if (mDataModel.getSelectedSentences().isParseGSA()){
                 parseGsa(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPRMC")){
+            System.out.println("RMC message");
             if (mDataModel.getSelectedSentences().isParseRMC()){
                 parseRmc(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGGA")){
+            System.out.println("GGA message");
             if (mDataModel.getSelectedSentences().isParseGGA()){
                 parseGga(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGLL")){
+            System.out.println("GLL message");
             if (mDataModel.getSelectedSentences().isParseGLL()){
                 parseGll(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGSV")){
+            System.out.println("GSV message");
             if (mDataModel.getSelectedSentences().isParseGSV()){
                 parseGsv(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPVTG")){
+            System.out.println("VTG message");
             if (mDataModel.getSelectedSentences().isParseVTG()){
                 parseVtg(sentence);
                 sentenceParsed = true;
@@ -129,6 +136,8 @@ public class SentenceParser {
                 }
             }
 
+            System.out.println("GGA message parsed");
+//            mDataModel.setLogCoordinate(true);
             mDataModel.notifyObservers();
         }
     }
@@ -197,6 +206,9 @@ public class SentenceParser {
                 }
             }
 
+            System.out.println("RMC message parsed");
+            mDataModel.notifyObservers();
+
         }
     }
 
@@ -243,6 +255,10 @@ public class SentenceParser {
             if (!vdop.isEmpty()){
                 mDataModel.setGsaVdop(Double.parseDouble(parseFromChecksum(vdop)));
             }
+
+            System.out.println("GSA message parsed");
+            mDataModel.notifyObservers();
+
         }
     }
 
@@ -281,6 +297,9 @@ public class SentenceParser {
 //                mDataModel.setVTGModeIndicator(splitMode[0]);
 //            }
 
+            System.out.println("VTG message parsed");
+            mDataModel.notifyObservers();
+
         }
     }
 
@@ -306,39 +325,48 @@ public class SentenceParser {
             } else {
 
             }
+
+            System.out.println("GLL message parsed");
+            mDataModel.notifyObservers();
+
         }
     }
 
     //!jdp -- Need to add error correction
     private UTCTime parseUtcTime(String utcTime){
-        
-        System.out.println("UTC Time: " + utcTime);
-        
-        String[] splitTime = utcTime.split("[.]");
-        
-        System.out.println("Split UTC Time: " + splitTime[0]);
-        
-        //Parse time from end of utcTime String
-        String utcSecond = splitTime[0].substring(splitTime[0].length() - 2);
-        String utcMinutes = splitTime[0].substring(splitTime[0].length() - 4, utcTime.length() - 2);
-        String utcHour = splitTime[0].substring(0, splitTime[0].length() - 4);
-        UTCTime time = new UTCTime(
-                Integer.parseInt(utcHour),
-                Integer.parseInt(utcMinutes),
-                Integer.parseInt(utcSecond));
+        try {
+            String[] splitTime = utcTime.split("[.]");
+            //Parse time from end of utcTime String
+            String utcSecond = splitTime[0].substring(splitTime[0].length() - 2);
+            String utcMinutes = splitTime[0].substring(splitTime[0].length() - 4, utcTime.length() - 2);
+            String utcHour = splitTime[0].substring(0, splitTime[0].length() - 4);
+            UTCTime time = new UTCTime(
+                    Integer.parseInt(utcHour),
+                    Integer.parseInt(utcMinutes),
+                    Integer.parseInt(utcSecond));
 
-        return time;
+            return time;
+        } catch (NumberFormatException ex){
+            System.out.println("Number format exception in parseUTCTime");
+            //Return the default UTC Time
+            return new UTCTime();
+        }
     }
 
     private UTCDate parseUtcDate(String utcDate){
+        try {
+            //Parse date from end
+            String utcYear = utcDate.substring(utcDate.length() - 2);
+            String utcMonth = utcDate.substring(utcDate.length() - 4, utcDate.length() - 2);
+            String utcDay = utcDate.substring(0, utcDate.length() - 4);
 
-        //Parse date from end
-        String utcYear = utcDate.substring(utcDate.length() - 2);
-        String utcMonth = utcDate.substring(utcDate.length() - 4, utcDate.length() - 2);
-        String utcDay = utcDate.substring(0, utcDate.length() - 4);
-
-        UTCDate date = new UTCDate(Integer.parseInt(utcDay), Integer.parseInt(utcMonth), Integer.parseInt(utcYear));
-        return date;
+            UTCDate date = new UTCDate(Integer.parseInt(utcDay), Integer.parseInt(utcMonth), Integer.parseInt(utcYear));
+            return date;
+        } catch (NumberFormatException ex){
+            System.out.println("Number format exception in parseUtcDate");
+            //Return the default UTC Date
+            return new UTCDate();
+        }
     }
 
     //!jdp -- Need to add error correction
@@ -347,28 +375,33 @@ public class SentenceParser {
             String latitudeHemisphere,
             String longitude,
             String longitudeHemisphere){
+        try {
+        Hemisphere latHemisphere;
+        Hemisphere lonHemisphere;
+        if (latitudeHemisphere.equals("N")){
+            latHemisphere = Hemisphere.NORTH;
+        } else {
+            latHemisphere = Hemisphere.SOUTH;
+        }
 
-            Hemisphere latHemisphere;
-            Hemisphere lonHemisphere;
-            if (latitudeHemisphere.equals("N")){
-                latHemisphere = Hemisphere.NORTH;
-            } else {
-                latHemisphere = Hemisphere.SOUTH;
-            }
+        if (longitudeHemisphere.equals("E")){
+            lonHemisphere = Hemisphere.EAST;
+        } else {
+            lonHemisphere = Hemisphere.WEST;
+        }
 
-            if (longitudeHemisphere.equals("E")){
-                lonHemisphere = Hemisphere.EAST;
-            } else {
-                lonHemisphere = Hemisphere.WEST;
-            }
-
-            Coordinate coordinate = new Coordinate(
-                    Double.parseDouble(latitude),
-                    latHemisphere,
-                    Double.parseDouble(longitude),
-                    lonHemisphere);
+        Coordinate coordinate = new Coordinate(
+                Double.parseDouble(latitude),
+                latHemisphere,
+                Double.parseDouble(longitude),
+                lonHemisphere);
 
         return coordinate;
+        } catch (NumberFormatException ex){
+            System.out.println("Number format exception in parseCoordinate");
+            //Return the default coordinate
+            return new Coordinate();
+        }
     }
 
     //Parse values from checksum
@@ -405,6 +438,8 @@ public class SentenceParser {
                 mCurrentGSVSentence = 0;
                 mDataModel.setSatellitesInView(mSatellitesInView);
             }
+
+            mDataModel.notifyObservers();
 
         }
     }

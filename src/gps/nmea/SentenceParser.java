@@ -311,11 +311,17 @@ public class SentenceParser {
 
     //!jdp -- Need to add error correction
     private UTCTime parseUtcTime(String utcTime){
-
+        
+        System.out.println("UTC Time: " + utcTime);
+        
+        String[] splitTime = utcTime.split("[.]");
+        
+        System.out.println("Split UTC Time: " + splitTime[0]);
+        
         //Parse time from end of utcTime String
-        String utcSecond = utcTime.substring(utcTime.length() - 2);
-        String utcMinutes = utcTime.substring(utcTime.length() - 4, utcTime.length() - 2);
-        String utcHour = utcTime.substring(0, utcTime.length() - 4);
+        String utcSecond = splitTime[0].substring(splitTime[0].length() - 2);
+        String utcMinutes = splitTime[0].substring(splitTime[0].length() - 4, utcTime.length() - 2);
+        String utcHour = splitTime[0].substring(0, splitTime[0].length() - 4);
         UTCTime time = new UTCTime(
                 Integer.parseInt(utcHour),
                 Integer.parseInt(utcMinutes),

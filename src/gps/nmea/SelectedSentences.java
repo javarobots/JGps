@@ -22,6 +22,24 @@ public class SelectedSentences {
         mSelectedSentenceMap.put(NmeaSentences.VTG, false);
         mSelectedSentenceMap.put(NmeaSentences.GSV, false);
     }
+    
+    public boolean isParse(NmeaSentences sentence){
+        boolean returnValue = false;
+        if (sentence.equals(NmeaSentences.GGA)){
+            returnValue = isParseGGA();
+        } else if (sentence.equals(NmeaSentences.GLL)){
+            returnValue = isParseGLL();
+        } else if (sentence.equals(NmeaSentences.GSA)){
+            returnValue =  isParseGSA();
+        } else if (sentence.equals(NmeaSentences.RMC)){
+            returnValue =  isParseRMC();
+        } else if (sentence.equals(NmeaSentences.VTG)){
+            returnValue =  isParseVTG();
+        } else if (sentence.equals(NmeaSentences.GSV)){
+            returnValue =  isParseGSV();
+        }
+        return returnValue;
+    }
 
     public boolean isParseGGA() {
         return mSelectedSentenceMap.get(NmeaSentences.GGA);

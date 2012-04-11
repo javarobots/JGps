@@ -12,6 +12,7 @@ import java.util.Observable;
 public class GpsDataModel extends Observable {
 
     private SelectedSentences mSelectedSentences;
+    private boolean mLogCoordinate = false;
 
     //From $GPGGA sentence
     private UTCTime mGGATime = new UTCTime(0,0,0);
@@ -66,6 +67,17 @@ public class GpsDataModel extends Observable {
         this.mSelectedSentences = selectedSentences;
         setChanged();
     }
+
+    public boolean isLogCoordinate() {
+        return mLogCoordinate;
+    }
+
+    public void setLogCoordinate(boolean logCoordinate) {
+        this.mLogCoordinate = logCoordinate;
+        setChanged();
+    }
+
+
 
 
     //---------------------- GGA Getter Setters ----------------------------

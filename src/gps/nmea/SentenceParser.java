@@ -47,37 +47,37 @@ public class SentenceParser {
         sentence = sentence.trim();
         String[] splitMessage = sentence.split(",");
         if (splitMessage[0].equals("$GPGSA")){
-            Debug.debugOut("GSA message");
+            Debug.debugOut("GSA message found");
             if (mDataModel.getSelectedSentences().isParseGSA()){
                 parseGsa(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPRMC")){
-            Debug.debugOut("RMC message");
+            Debug.debugOut("RMC message found");
             if (mDataModel.getSelectedSentences().isParseRMC()){
                 parseRmc(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGGA")){
-            Debug.debugOut("GGA message");
+            Debug.debugOut("GGA message found");
             if (mDataModel.getSelectedSentences().isParseGGA()){
                 parseGga(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGLL")){
-            Debug.debugOut("GLL message");
+            Debug.debugOut("GLL message found");
             if (mDataModel.getSelectedSentences().isParseGLL()){
                 parseGll(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGSV")){
-            Debug.debugOut("GSV message");
+            Debug.debugOut("GSV message found");
             if (mDataModel.getSelectedSentences().isParseGSV()){
                 parseGsv(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPVTG")){
-            Debug.debugOut("VTG message");
+            Debug.debugOut("VTG message found");
             if (mDataModel.getSelectedSentences().isParseVTG()){
                 parseVtg(sentence);
                 sentenceParsed = true;
@@ -93,6 +93,8 @@ public class SentenceParser {
     private void parseGga(String message){
         Checksum checksum = new Checksum(message);
         if (checksum.isValid()){
+            Debug.debugOut("GGA Checksum Passed");
+            Debug.debugOut("GGA message: " + message);
             String[] values = message.split(",");
 
             //Set GGA UTC time
@@ -126,15 +128,16 @@ public class SentenceParser {
                 mDataModel.setGGAHeightAboveSeaLevel(Double.parseDouble(altitude));
             }
 
+            //!jdp - commented to see if this was cause of error
             //Set Geoidal height
-            String geodialHeight = values[11];
-            if (!geodialHeight.isEmpty()){
-                try{
-                    mDataModel.setGGAGeoidalHeight(Double.parseDouble(geodialHeight));
-                } catch (NumberFormatException ex){
-                    //Do nothing
-                }
-            }
+//            String geodialHeight = values[11];
+//            if (!geodialHeight.isEmpty()){
+//                try{
+//                    mDataModel.setGGAGeoidalHeight(Double.parseDouble(geodialHeight));
+//                } catch (NumberFormatException ex){
+//                    //Do nothing
+//                }
+//            }
 
             Debug.debugOut("GGA message parsed");
             mDataModel.setLogCoordinate(true);

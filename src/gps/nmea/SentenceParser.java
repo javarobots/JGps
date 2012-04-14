@@ -24,6 +24,7 @@ public class SentenceParser {
     }
 
     public String[] processData(String data){
+        Debug.debugOut("Input data:\n" + data);
         if (!mBeginOfSentence){
             int indexOfStart = data.indexOf("$");
             if (indexOfStart != -1){
@@ -94,7 +95,6 @@ public class SentenceParser {
         Checksum checksum = new Checksum(message);
         if (checksum.isValid()){
             Debug.debugOut("GGA Checksum Passed");
-            Debug.debugOut("GGA message: " + message);
             String[] values = message.split(",");
 
             //Set GGA UTC time

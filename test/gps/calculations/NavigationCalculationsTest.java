@@ -43,6 +43,18 @@ public class NavigationCalculationsTest {
         double result = mInstance.degreesMinutesToDegrees(degreesMinutes);
         assertEquals(expResult, result, 0.0);
     }
+    
+    /**
+     * Test of degreesMinutesToDegrees method, of class NavigationCalculations.
+     */
+    @Test
+    public void testDegreesMinutesSecondsToDegrees() {
+        System.out.println("Test degreesMinutesSecondsToDegrees");
+        String degreesMinutesSeconds = "35 04 01.03";
+        double expResult = 35.0669;
+        double result = mInstance.degreeMinutesSecondsToDegrees(degreesMinutesSeconds);
+        assertEquals(expResult, result, 0.0001);
+    }
 
     /**
      * Test of degreesMinutesToRad method, of class NavigationCalculations.

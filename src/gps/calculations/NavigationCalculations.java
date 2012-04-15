@@ -38,6 +38,22 @@ public class NavigationCalculations {
         degrees = degrees + minutes;
         return degrees;
     }
+    
+    /**
+     * Convert a latitude or longitude value in 
+     * "dd mm ss.ss" format to single degree value.
+     * @param degreeMinutesSeconds - the String value in "dd mm ss.ss" format
+     * @return the degree value
+     */
+    public double degreeMinutesSecondsToDegrees(String degreeMinutesSeconds){
+        String[] splitValue = degreeMinutesSeconds.split(" ");
+        double degrees = Double.parseDouble(splitValue[0]);
+        double minutes = Double.parseDouble(splitValue[1]);
+        double seconds = Double.parseDouble(splitValue[2]);
+        seconds += (minutes * 60);
+        degrees += (seconds/3600);
+        return degrees;
+    }
 
     /**
      * Convert degrees and minutes to a radian value

@@ -24,18 +24,19 @@ public class SentenceParser {
     }
 
     public String[] processData(String data){
-        if (!mBeginOfSentence){
-            int indexOfStart = data.indexOf("$");
-            if (indexOfStart != -1){
-                data = data.substring(indexOfStart);
-                mBeginOfSentence = true;
+        String[] sentences = null;
+        if (data.contains("$")){
+            //Trim any data leading $
+            if (data.indexOf("$") > 0){
+                data = data.substring(data.indexOf("$"));
             }
-        }
-        //Parse out the sentences on $
-        String[] sentences = data.split("[$]");
-        for (String sentence : sentences){
-            if (!sentence.isEmpty()){
-                parseSentence("$" + sentence);
+
+            //Parse out the sentences on $
+            sentences = data.split("[$]");
+            for (String sentence : sentences){
+                if (!sentence.isEmpty()){
+                    parseSentence("$" + sentence);
+                }
             }
         }
         return sentences;
@@ -47,38 +48,38 @@ public class SentenceParser {
         sentence = sentence.trim();
         String[] splitMessage = sentence.split(",");
         if (splitMessage[0].equals("$GPGSA")){
-            Debug.debugOut("GSA message found");
             if (mDataModel.getSelectedSentences().isParseGSA()){
+                Debug.debugOut("GSA message found");
                 parseGsa(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPRMC")){
-            Debug.debugOut("RMC message found");
             if (mDataModel.getSelectedSentences().isParseRMC()){
+                Debug.debugOut("RMC message found");
                 parseRmc(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGGA")){
-            Debug.debugOut("GGA message found");
             if (mDataModel.getSelectedSentences().isParseGGA()){
+                Debug.debugOut("GGA message found");
                 parseGga(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGLL")){
-            Debug.debugOut("GLL message found");
             if (mDataModel.getSelectedSentences().isParseGLL()){
+                Debug.debugOut("GLL message found");
                 parseGll(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPGSV")){
-            Debug.debugOut("GSV message found");
             if (mDataModel.getSelectedSentences().isParseGSV()){
+                Debug.debugOut("GSV message found");
                 parseGsv(sentence);
                 sentenceParsed = true;
             }
         } else if (splitMessage[0].equals("$GPVTG")){
-            Debug.debugOut("VTG message found");
             if (mDataModel.getSelectedSentences().isParseVTG()){
+                Debug.debugOut("VTG message found");
                 parseVtg(sentence);
                 sentenceParsed = true;
             }
@@ -94,39 +95,45 @@ public class SentenceParser {
         Checksum checksum = new Checksum(message);
         if (checksum.isValid()){
             Debug.debugOut("GGA Checksum Passed");
-            Debug.debugOut("GGA message: " + message);
             String[] values = message.split(",");
 
             //Set GGA UTC time
             UTCTime time = parseUtcTime(values[1]);
             mDataModel.setGGATime(time);
+            Debug.debugOut("UTC");
 
             //Set GGA Coordinate
             Coordinate ggaCoordinate = parseCoordinate(values[2], values[3], values[4], values[5]);
             mDataModel.setGGACoordinate(ggaCoordinate);
+            Debug.debugOut("Coordinate");
 
             //Set fix quality
             String fixQuality = values[6];
             if (!fixQuality.isEmpty()){
                 mDataModel.setGgaFixQuality(Integer.parseInt(fixQuality));
             }
+            Debug.debugOut("Fix");
 
             //Set number of stellites in use
             String numberOfSatelites = values[7];
             if (!numberOfSatelites.isEmpty()){
                 mDataModel.setGGANumberOfSatelites(Integer.parseInt(numberOfSatelites));
             }
+            Debug.debugOut("Num Sat");
 
             //Set HDOP
             String hdop = values[8];
             if (!hdop.isEmpty()){
                 mDataModel.setGGAHdop(Double.parseDouble(hdop));
             }
+            Debug.debugOut("HDOP");
+
             //Set altitude
             String altitude = values[9];
             if (!altitude.isEmpty()){
                 mDataModel.setGGAHeightAboveSeaLevel(Double.parseDouble(altitude));
             }
+            Debug.debugOut("Altitude");
 
             //!jdp - commented to see if this was cause of error
             //Set Geoidal height
@@ -337,10 +344,11 @@ public class SentenceParser {
 
     private UTCTime parseUtcTime(String utcTime){
         try {
+            Debug.debugOut("UTC: " + utcTime);
             String[] splitTime = utcTime.split("[.]");
             //Parse time from end of utcTime String
             String utcSecond = splitTime[0].substring(splitTime[0].length() - 2);
-            String utcMinutes = splitTime[0].substring(splitTime[0].length() - 4, utcTime.length() - 2);
+            String utcMinutes = splitTime[0].substring(splitTime[0].length() - 4, splitTime[0].length() - 2);
             String utcHour = splitTime[0].substring(0, splitTime[0].length() - 4);
             UTCTime time = new UTCTime(
                     Integer.parseInt(utcHour),

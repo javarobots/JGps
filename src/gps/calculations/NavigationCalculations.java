@@ -38,9 +38,9 @@ public class NavigationCalculations {
         degrees = degrees + minutes;
         return degrees;
     }
-    
+
     /**
-     * Convert a latitude or longitude value in 
+     * Convert a latitude or longitude value in
      * "dd mm ss.ss" format to single degree value.
      * @param degreeMinutesSeconds - the String value in "dd mm ss.ss" format
      * @return the degree value
@@ -53,6 +53,25 @@ public class NavigationCalculations {
         seconds += (minutes * 60);
         degrees += (seconds/3600);
         return degrees;
+    }
+
+    /**
+     * Convert a latitude or longitude value in
+     * "dd mm ss.ss" format to single degree minute
+     * value. This conversion is primarily used for
+     * testing
+     * @param degreeMinutesSeconds - the String value in "dd mm.mmm" format
+     * @return the degree value
+     */
+    public double degreeMinutesSecondsToNmeaDegreesMinutes(String degreeMinutesSeconds){
+        String[] splitValue = degreeMinutesSeconds.split(" ");
+        String degrees = splitValue[0];
+        double minutes = Double.parseDouble(splitValue[1]);
+        double seconds = Double.parseDouble(splitValue[2]);
+        minutes += (seconds / 60);
+        String returnValue = degrees + minutes;
+        return Double.parseDouble(returnValue);
+
     }
 
     /**
